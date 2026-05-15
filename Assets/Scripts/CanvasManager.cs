@@ -9,6 +9,7 @@ public class CanvasManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI hudCrystalText;
     [SerializeField] private GameObject player;
+    [SerializeField] private TextMeshProUGUI shieldText;
     [SerializeField] private GameObject gameManager;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI timeText;
@@ -62,6 +63,7 @@ public class CanvasManager : MonoBehaviour
 
         playerController = player.GetComponent<PlayerController>();
         playerController.OnCrystalCollected += PlayerController_OnCrystalCollected;
+        playerController.OnShieldChanged += PlayerController_OnShieldChange;
         playerController.OnUpgradeMaxedOut += PlayerController_OnUpgradeMaxedOut;
         playerController.OnUpgradePurchased += PlayerController_OnUpgradePurchased;
         playerController.OnGamePaused += PlayerController_OnGamePaused;
@@ -243,6 +245,11 @@ public class CanvasManager : MonoBehaviour
     private void PlayerController_OnUpgradeMaxedOut(object sender, PlayerController.OnUpgradeMaxedOutArgs e)
     {
         RemoveUpgradeFromList(e.UpgradeIndex, e.IsLegendary);
+    }
+
+    private void PlayerController_OnShieldChange(object sender, PlayerController.OnShieldChangedEventArgs e)
+    {
+        shieldText.text = "Shields: " + e.ShieldCount.ToString();
     }
 
     private void PlayerController_OnCrystalCollected(object sender, PlayerController.OnCrystalCollectedEventArgs e)
