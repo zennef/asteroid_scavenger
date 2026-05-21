@@ -20,7 +20,8 @@ public class ConfirmationScreenManager : MonoBehaviour
 
     public void SetUpgradeButton(GameObject upgradeButton) 
     {
-        Instantiate(upgradeButton, upgradeSlot.transform.position, Quaternion.identity, upgradeSlot.transform.transform);
+        if (upgradeSlot.transform.childCount > 0) Destroy(upgradeSlot.transform.GetChild(0).gameObject);
+        Instantiate(upgradeButton, upgradeSlot.transform.position, Quaternion.identity, upgradeSlot.transform);
     }
 
 }
