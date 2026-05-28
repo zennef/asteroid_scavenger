@@ -46,6 +46,13 @@ public class PlayerController : MonoBehaviour
     private float fuelAmount = 100f;
     private bool isLevelRunning = false;
 
+    public event EventHandler OnPlayerHitByRock;
+    public event EventHandler OnPlayerHitByWall;
+    public enum HitSource { Rock, Wall };
+
+    public event EventHandler OnFuelCellCollected;
+    public event EventHandler OnCrystalCollectedSfx;
+
     private int crystalCount = 0;
     public event EventHandler<OnCrystalCollectedEventArgs> OnCrystalCollected;
     public class OnCrystalCollectedEventArgs : EventArgs
@@ -347,7 +354,7 @@ public class PlayerController : MonoBehaviour
         OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
     }
 
-    private void UseShield(float dmgAmt, bool isTrueDamage)
+    private void UseShield(float dmgAmt, bool isTrueDamage, HitSource hitSource)
     {
         if (shieldCount > 0)
         {
@@ -358,12 +365,24 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(ShieldRegenRoutine());
             }
-            if (isTrueDamage) LoseFuel(dmgAmt);
+            if (isTrueDamage)
+            {
+                LoseFuel(dmgAmt);
+                OnPlayerHitByWall?.Invoke(this, EventArgs.Empty);
+            }
             return;
         }
         else
         {
             LoseFuel(dmgAmt);
+            if (hitSource == HitSource.Rock)
+            {
+                OnPlayerHitByRock?.Invoke(this, EventArgs.Empty);
+            }
+            else if (hitSource == HitSource.Wall)
+            {
+                OnPlayerHitByWall?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 
@@ -371,24 +390,27 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Rock"))
         {
-            UseShield(rockImpactFuelLoss, false);
+            UseShield(rockImpactFuelLoss, false, HitSource.Rock);
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
-            UseShield(wallImpactFuelLoss, isWallTrueDamage);
+            UseShield(wallImpactFuelLoss, isWallTrueDamage, HitSource.Wall);
         }
         else if (other.gameObject.CompareTag("Fuel"))
         {
             AddFuel();
+            OnFuelCellCollected?.Invoke(this, EventArgs.Empty);
         }
         else if (other.gameObject.CompareTag("Crystal"))
         {
             if (isCrystalAFuelCell)
             {
                 AddFuel();
+                OnFuelCellCollected?.Invoke(this, EventArgs.Empty);
             }
             crystalCount++;
             OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
+            OnCrystalCollectedSfx?.Invoke(this, EventArgs.Empty);
         }
         if (other.gameObject.activeInHierarchy)
         {
@@ -592,5 +614,10 @@ public class PlayerController : MonoBehaviour
     public float GetShieldRechargeInterval()
     {
         return shieldRegenInterval;
+    }
+
+    public float GetFuelEfficiency()
+    {
+        return fuelConsumptionPerSecond;
     }
 }

@@ -9,7 +9,6 @@ public class CanvasManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI hudCrystalText;
     [SerializeField] private GameObject player;
-    [SerializeField] private TextMeshProUGUI shieldText;
     [SerializeField] private GameObject gameManager;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI timeText;
@@ -27,6 +26,10 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuGameOverTitle;
     [SerializeField] private GameObject playerStats;
     [SerializeField] private GameObject menuBackground;
+    [SerializeField] private TextMeshProUGUI shieldLabelText;
+    [SerializeField] private TextMeshProUGUI maxFuelCapacityText;
+    [SerializeField] private TextMeshProUGUI fuelEfficiencyText;
+    [SerializeField] private GameObject asteroidShieldImage;
 
     [SerializeField] private List<GameObject> commonUpgrades;
     [SerializeField] private List<GameObject> legendaryUpgrades;
@@ -39,7 +42,6 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyWallValueText;
     [SerializeField] private TextMeshProUGUI keyRockValueText;
     [SerializeField] private GameObject hideCrystalFuelCellValue;
-    [SerializeField] private TextMeshProUGUI ShieldInstructionsText;
 
     // Animation settings — tweak these in one place
     private const float SLIDE_DISTANCE = 40f;
@@ -63,7 +65,6 @@ public class CanvasManager : MonoBehaviour
 
         playerController = player.GetComponent<PlayerController>();
         playerController.OnCrystalCollected += PlayerController_OnCrystalCollected;
-        playerController.OnShieldChanged += PlayerController_OnShieldChange;
         playerController.OnUpgradeMaxedOut += PlayerController_OnUpgradeMaxedOut;
         playerController.OnUpgradePurchased += PlayerController_OnUpgradePurchased;
         playerController.OnGamePaused += PlayerController_OnGamePaused;
@@ -221,7 +222,16 @@ public class CanvasManager : MonoBehaviour
         }
         else if (e.UpgradeName == "Asteroid Shield")
         {
-            ShieldInstructionsText.text = "Shields block all damage";
+            shieldLabelText.text = "ASTEROID SHIELDS";
+            asteroidShieldImage.SetActive(true);
+        }
+        else if (e.UpgradeName == "Fuel Efficiency")
+        {
+            fuelEfficiencyText.text = "-" + playerController.GetFuelEfficiency().ToString();
+        }
+        else if (e.UpgradeName == "Fuel Capacity")
+        {
+            maxFuelCapacityText.text = playerController.GetMaxFuelAmount().ToString();
         }
     }
 
@@ -232,7 +242,10 @@ public class CanvasManager : MonoBehaviour
         keyWallValueText.text = "-" + playerController.GetWallImpactFuelLoss().ToString();
         keyRockValueText.text = "-" + playerController.GetRockImpactFuelLoss().ToString();
         hideCrystalFuelCellValue.SetActive(true);
-        ShieldInstructionsText.text = "Shields only block damage from Rocks";
+        shieldLabelText.text = "ROCK SHIELDS";
+        asteroidShieldImage.SetActive(false);
+        fuelEfficiencyText.text = "-" + playerController.GetFuelEfficiency().ToString();
+        maxFuelCapacityText.text = playerController.GetMaxFuelAmount().ToString();
     }
 
     void Update()
@@ -245,11 +258,6 @@ public class CanvasManager : MonoBehaviour
     private void PlayerController_OnUpgradeMaxedOut(object sender, PlayerController.OnUpgradeMaxedOutArgs e)
     {
         RemoveUpgradeFromList(e.UpgradeIndex, e.IsLegendary);
-    }
-
-    private void PlayerController_OnShieldChange(object sender, PlayerController.OnShieldChangedEventArgs e)
-    {
-        shieldText.text = "Shields: " + e.ShieldCount.ToString();
     }
 
     private void PlayerController_OnCrystalCollected(object sender, PlayerController.OnCrystalCollectedEventArgs e)
@@ -347,8 +355,8 @@ public class CanvasManager : MonoBehaviour
 
     private void UpdateCrystalText(int crystalCount)
     {
-        hudCrystalText.text = "Crystals: " + crystalCount.ToString();
-        shopCrystalText.text = "Crystals: " + crystalCount.ToString();
+        hudCrystalText.text = "CRYSTALS: " + crystalCount.ToString();
+        shopCrystalText.text = "CRYSTALS: " + crystalCount.ToString();
     }
 
     private void UpdateHUDCurrentLevel(int level)
