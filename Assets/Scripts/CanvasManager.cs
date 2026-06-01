@@ -294,6 +294,7 @@ public class CanvasManager : MonoBehaviour
 
     public void OpenShop()
     {
+        AudioManager.Instance.PlayShopMusic();
         ShowPanel(shop, new Vector2(0, -SLIDE_DISTANCE));
         ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE), delay: 0.05f);
         SpawnRandomUpgrades();

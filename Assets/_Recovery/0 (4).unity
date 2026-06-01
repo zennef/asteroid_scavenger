@@ -8690,12 +8690,10 @@ MonoBehaviour:
   sfxLevelComplete: {fileID: 0}
   sfxGameOver: {fileID: 0}
   sfxYouWin: {fileID: 0}
-  musicMenu: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
-  musicGameplay: {fileID: 8300000, guid: 2d1425c57663fff4d890dc1f7eea133f, type: 3}
-  musicShop: {fileID: 8300000, guid: 39eb2d1c0c7eedf41ab86cdc89eac945, type: 3}
-  musicPause: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
-  musicGameOver: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
-  musicYouWin: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
+  musicGameplay: {fileID: 0}
+  musicShop: {fileID: 0}
+  musicGameOver: {fileID: 0}
+  musicYouWin: {fileID: 0}
   masterVolume: 1
   musicVolume: 0.6
   sfxVolume: 1
