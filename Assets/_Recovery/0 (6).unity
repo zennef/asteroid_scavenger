@@ -6261,7 +6261,6 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6387,25 +6386,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4fcb62bcba03d49a5f9f03a45855fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraShakeManager
-  player: {fileID: 514381696}
-  rockShakeDuration: 0.25
-  rockShakeStrength: 0.15
-  rockShakeVibrato: 20
-  wallShakeDuration: 0.4
-  wallShakeStrength: 0.3
-  wallShakeVibrato: 25
 --- !u!1 &527691119
 GameObject:
   m_ObjectHideFlags: 0
@@ -8711,15 +8691,15 @@ MonoBehaviour:
   sfxGameOver: {fileID: 0}
   sfxYouWin: {fileID: 0}
   musicMenu: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
-  musicGameplayEarly: {fileID: 8300000, guid: b2171595a1eaf5e48b1f01ddfa0efb60, type: 3}
-  musicGameplayMid: {fileID: 8300000, guid: 396e66ce63ae86e498693b54f2f7e34d, type: 3}
-  musicGameplayLate: {fileID: 8300000, guid: 2c146c68c77fa2b44a022470bebe5c11, type: 3}
+  musicGameplayEarly: {fileID: 0}
+  musicGameplayMid: {fileID: 0}
+  musicGameplayLate: {fileID: 0}
   musicShop: {fileID: 8300000, guid: 39eb2d1c0c7eedf41ab86cdc89eac945, type: 3}
   musicPause: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
   musicGameOver: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
   musicYouWin: {fileID: 8300000, guid: b5355211f1b95d74db655ce732408b34, type: 3}
-  masterVolume: 0.506
-  musicVolume: 0.5
+  masterVolume: 1
+  musicVolume: 0.6
   sfxVolume: 1
   sfxSourceCount: 8
   lowFuelThreshold: 30

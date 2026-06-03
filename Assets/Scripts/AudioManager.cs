@@ -26,7 +26,9 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music Clips")]
     [SerializeField] private AudioClip musicMenu;
-    [SerializeField] private AudioClip musicGameplay;
+    [SerializeField] private AudioClip musicGameplayEarly;   // levels 1-4
+    [SerializeField] private AudioClip musicGameplayMid;     // levels 5-8
+    [SerializeField] private AudioClip musicGameplayLate;    // levels 9-12
     [SerializeField] private AudioClip musicShop;
     [SerializeField] private AudioClip musicPause;
     [SerializeField] private AudioClip musicGameOver;
@@ -52,6 +54,7 @@ public class AudioManager : MonoBehaviour
     private bool lowFuelWarningSent = false;
     private bool isMuted = false;
     private int previousShieldCount = -1;
+    private int currentLevel = 1;
 
     // =========================================================================
     // Unity lifecycle
@@ -129,6 +132,8 @@ public class AudioManager : MonoBehaviour
         gameManagerScript.OnLevelEnded += Handle_LevelEnded;
         gameManagerScript.OnGameOver += Handle_GameOver;
         gameManagerScript.OnYouWin += Handle_YouWin;
+        gameManagerScript.OnCurrentLevelIncrease += Handle_CurrentLevelIncrease;
+
     }
 
     private void UnsubscribeFromEvents()
@@ -153,6 +158,7 @@ public class AudioManager : MonoBehaviour
             gameManagerScript.OnLevelEnded -= Handle_LevelEnded;
             gameManagerScript.OnGameOver -= Handle_GameOver;
             gameManagerScript.OnYouWin -= Handle_YouWin;
+            gameManagerScript.OnCurrentLevelIncrease -= Handle_CurrentLevelIncrease;
         }
     }
 
@@ -175,7 +181,7 @@ public class AudioManager : MonoBehaviour
             if (musicSource.clip == musicPause)
             {
                 musicSource.Stop();
-                PlayMusic(musicGameplay);
+                PlayMusic(GetGameplayMusicForLevel(currentLevel));
                 musicSource.time = gameplayMusicPosition;
             }
         }
@@ -227,16 +233,29 @@ public class AudioManager : MonoBehaviour
 
     private void Handle_GameStart(object sender, EventArgs e)
     {
+        Debug.Log("AudioManager: Handle_GameStart fired");
         lowFuelWarningSent = false;
         previousShieldCount = -1;
-        PlayMusic(musicGameplay);
+        PlayMusic(GetGameplayMusicForLevel(currentLevel), forceRestart: true);
     }
+
+    private void Handle_CurrentLevelIncrease(object sender, GameManager.OnCurrentLevelIncreaseEventArgs e)
+    {
+        currentLevel = e.CurrentLevel;
+        if (currentLevel > 1) // don't swap on game start, Handle_GameStart covers that
+        {
+            AudioClip correctClip = GetGameplayMusicForLevel(currentLevel);
+            if (musicSource.clip != correctClip)
+                PlayMusic(correctClip);
+        }
+    }
+
 
     private void Handle_LevelStarted(object sender, EventArgs e)
     {
         lowFuelWarningSent = false;
-        if (musicSource.clip != musicGameplay)
-            PlayMusic(musicGameplay);
+        AudioClip correctClip = GetGameplayMusicForLevel(currentLevel);
+        PlayMusic(correctClip, forceRestart: true);
     }
 
     private void Handle_LevelEnded(object sender, EventArgs e)
@@ -278,6 +297,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip clip, bool forceRestart = false)
     {
+        Debug.Log($"AudioManager: PlayMusic called with clip: {clip?.name}, forceRestart: {forceRestart}");
         if (clip == null) return;
         if (!forceRestart && musicSource.clip == clip && musicSource.isPlaying) return;
 
@@ -347,5 +367,12 @@ public class AudioManager : MonoBehaviour
             "you_win" => sfxYouWin,
             _ => null
         };
+    }
+
+    private AudioClip GetGameplayMusicForLevel(int level)
+    {
+        if (level <= 4) return musicGameplayEarly;
+        if (level <= 8) return musicGameplayMid;
+        return musicGameplayLate;
     }
 }
