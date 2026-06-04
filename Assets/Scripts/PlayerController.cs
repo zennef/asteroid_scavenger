@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour
         OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
     }
 
-    private void UseShield(float dmgAmt, bool isTrueDamage, HitSource hitSource)
+    private bool UseShield(float dmgAmt, bool isTrueDamage, HitSource hitSource)
     {
         if (shieldCount > 0)
         {
@@ -369,8 +369,9 @@ public class PlayerController : MonoBehaviour
             {
                 LoseFuel(dmgAmt);
                 OnPlayerHitByWall?.Invoke(this, EventArgs.Empty);
+                return false;
             }
-            return;
+            return true;
         }
         else
         {
@@ -383,23 +384,29 @@ public class PlayerController : MonoBehaviour
             {
                 OnPlayerHitByWall?.Invoke(this, EventArgs.Empty);
             }
+            return false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.TryGetComponent<ObjectController>(out var oc) && oc.IsConsumed) return;
+
         if (other.gameObject.CompareTag("Rock"))
         {
-            UseShield(rockImpactFuelLoss, false, HitSource.Rock);
+            bool blocked = UseShield(rockImpactFuelLoss, false, HitSource.Rock);
+            oc?.Consume(blocked ? "BLOCKED!" : $"-{Mathf.RoundToInt(rockImpactFuelLoss)}", blocked ? ColorPalette.Blue : ColorPalette.Pink);
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
-            UseShield(wallImpactFuelLoss, isWallTrueDamage, HitSource.Wall);
+            bool blocked = UseShield(wallImpactFuelLoss, isWallTrueDamage, HitSource.Wall);
+            oc?.Consume(blocked ? "BLOCKED!" : $"-{Mathf.RoundToInt(wallImpactFuelLoss)}", blocked ? ColorPalette.Blue : ColorPalette.Pink);
         }
         else if (other.gameObject.CompareTag("Fuel"))
         {
             AddFuel();
             OnFuelCellCollected?.Invoke(this, EventArgs.Empty);
+            oc?.Consume($"+{Mathf.RoundToInt(fuelCellAmount)}", ColorPalette.Green);
         }
         else if (other.gameObject.CompareTag("Crystal"))
         {
@@ -411,10 +418,7 @@ public class PlayerController : MonoBehaviour
             crystalCount++;
             OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
             OnCrystalCollectedSfx?.Invoke(this, EventArgs.Empty);
-        }
-        if (other.gameObject.activeInHierarchy)
-        {
-            ObjectPoolManager.ReturnObjectToPool(other.gameObject);
+            oc?.Consume("+1", ColorPalette.Cyan);
         }
     }
 

@@ -43,7 +43,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyRockValueText;
     [SerializeField] private GameObject hideCrystalFuelCellValue;
 
-    // Animation settings — tweak these in one place
+    // Animation settings ï¿½ tweak these in one place
     private const float SLIDE_DISTANCE = 40f;
     private const float SLIDE_DURATION = 0.3f;
     private const float FADE_DURATION = 0.2f;
@@ -305,8 +305,7 @@ public class CanvasManager : MonoBehaviour
         ShowPanelInstant(menuBackground);
         playerController.IncreaseCrystalCount(100);
         ShowPanel(shop, new Vector2(0, -SLIDE_DISTANCE));
-        ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE), delay: 0.05f);
-        SpawnRandomUpgrades();
+        SpawnAllUpgrades();
     }
 
     public void DestroyShopUpgrades()
@@ -363,6 +362,27 @@ public class CanvasManager : MonoBehaviour
     private void UpdateHUDCurrentLevel(int level)
     {
         levelText.text = level.ToString();
+    }
+
+    private void SpawnAllUpgrades()
+    {
+        foreach (Transform spawnPosition in upgradeSpawnPositions)
+            foreach (Transform child in spawnPosition)
+                Destroy(child.gameObject);
+
+        int slotIndex = 0;
+        foreach (GameObject upgrade in commonUpgrades)
+        {
+            if (slotIndex >= upgradeSpawnPositions.Length) break;
+            Transform spawnPos = upgradeSpawnPositions[slotIndex++];
+            Instantiate(upgrade, spawnPos.position, Quaternion.identity, spawnPos);
+        }
+        foreach (GameObject upgrade in legendaryUpgrades)
+        {
+            if (slotIndex >= upgradeSpawnPositions.Length) break;
+            Transform spawnPos = upgradeSpawnPositions[slotIndex++];
+            Instantiate(upgrade, spawnPos.position, Quaternion.identity, spawnPos);
+        }
     }
 
     private void SpawnRandomUpgrades()
