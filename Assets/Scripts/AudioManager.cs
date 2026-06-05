@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip sfxShieldDestroyed;
     [SerializeField] private AudioClip sfxShieldRecharged;
     [SerializeField] private AudioClip sfxLowFuelWarning;
+    [SerializeField] private AudioClip sfxLowTimeWarning;
     [SerializeField] private AudioClip sfxUpgradePurchased;
     [SerializeField] private AudioClip sfxLevelComplete;
     [SerializeField] private AudioClip sfxGameOver;
@@ -26,11 +27,10 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music Clips")]
     [SerializeField] private AudioClip musicMenu;
-    [SerializeField] private AudioClip musicGameplayEarly;   // levels 1-4
-    [SerializeField] private AudioClip musicGameplayMid;     // levels 5-8
-    [SerializeField] private AudioClip musicGameplayLate;    // levels 9-12
+    [SerializeField] private AudioClip[] musicGameplayEarly = new AudioClip[4];   // levels 1-4
+    [SerializeField] private AudioClip[] musicGameplayMid = new AudioClip[4];     // levels 5-8
+    [SerializeField] private AudioClip[] musicGameplayLate = new AudioClip[4];    // levels 9-12
     [SerializeField] private AudioClip musicShop;
-    [SerializeField] private AudioClip musicPause;
     [SerializeField] private AudioClip musicGameOver;
     [SerializeField] private AudioClip musicYouWin;
 
@@ -51,10 +51,17 @@ public class AudioManager : MonoBehaviour
     private PlayerController playerController;
     private GameManager gameManagerScript;
 
+    private AudioClip[] _shuffledEarly;
+    private AudioClip[] _shuffledMid;
+    private AudioClip[] _shuffledLate;
+
     private bool lowFuelWarningSent = false;
     private bool isMuted = false;
     private int previousShieldCount = -1;
     private int currentLevel = 1;
+    private bool _isLowTimeWarningActive = false;
+    private int _lastBeepSecond = -1;
+    private bool _shieldUpgradeJustPurchased = false;
 
     // =========================================================================
     // Unity lifecycle
@@ -93,6 +100,21 @@ public class AudioManager : MonoBehaviour
     private void OnDestroy()
     {
         UnsubscribeFromEvents();
+    }
+
+    private void Update()
+    {
+        if (!_isLowTimeWarningActive || gameManagerScript == null) return;
+
+        float t = gameManagerScript.timeRemaining;
+        if (t <= 0f || t > 10f) return;
+
+        int wholeSecond = Mathf.FloorToInt(t);
+        if (wholeSecond != _lastBeepSecond)
+        {
+            _lastBeepSecond = wholeSecond;
+            PlaySFX(sfxLowTimeWarning);
+        }
     }
 
     // =========================================================================
@@ -166,25 +188,12 @@ public class AudioManager : MonoBehaviour
     // Event handlers
     // =========================================================================
 
-    private float gameplayMusicPosition = 0f;
-
     private void Handle_GamePaused(object sender, PlayerController.OnGamePausedArgs e)
     {
         if (e.IsGamePaused)
-        {
-            gameplayMusicPosition = musicSource.time;
-            musicSource.Stop();
-            PlayMusic(musicPause);
-        }
+            musicSource.Pause();
         else
-        {
-            if (musicSource.clip == musicPause)
-            {
-                musicSource.Stop();
-                PlayMusic(GetGameplayMusicForLevel(currentLevel));
-                musicSource.time = gameplayMusicPosition;
-            }
-        }
+            musicSource.UnPause();
     }
 
     private void Handle_FuelCellCollected(object sender, EventArgs e)
@@ -211,7 +220,10 @@ public class AudioManager : MonoBehaviour
     {
         if (previousShieldCount >= 0 && e.ShieldCount > previousShieldCount)
         {
-            PlaySFX(sfxShieldRecharged);
+            if (_shieldUpgradeJustPurchased)
+                _shieldUpgradeJustPurchased = false;
+            else
+                PlaySFX(sfxShieldRecharged);
         }
         previousShieldCount = e.ShieldCount;
     }
@@ -223,6 +235,8 @@ public class AudioManager : MonoBehaviour
 
     private void Handle_UpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
+        if (e.UpgradeName == "Shield Charges")
+            _shieldUpgradeJustPurchased = true;
         PlaySFX(sfxUpgradePurchased);
     }
 
@@ -236,41 +250,41 @@ public class AudioManager : MonoBehaviour
         Debug.Log("AudioManager: Handle_GameStart fired");
         lowFuelWarningSent = false;
         previousShieldCount = -1;
+        ShufflePlaylists();
         PlayMusic(GetGameplayMusicForLevel(currentLevel), forceRestart: true);
     }
 
     private void Handle_CurrentLevelIncrease(object sender, GameManager.OnCurrentLevelIncreaseEventArgs e)
     {
         currentLevel = e.CurrentLevel;
-        if (currentLevel > 1) // don't swap on game start, Handle_GameStart covers that
-        {
-            AudioClip correctClip = GetGameplayMusicForLevel(currentLevel);
-            if (musicSource.clip != correctClip)
-                PlayMusic(correctClip);
-        }
     }
 
 
     private void Handle_LevelStarted(object sender, EventArgs e)
     {
         lowFuelWarningSent = false;
+        _isLowTimeWarningActive = true;
+        _lastBeepSecond = -1;
         AudioClip correctClip = GetGameplayMusicForLevel(currentLevel);
         PlayMusic(correctClip, forceRestart: true);
     }
 
     private void Handle_LevelEnded(object sender, EventArgs e)
     {
+        _isLowTimeWarningActive = false;
         PlaySFX(sfxLevelComplete);
     }
 
     private void Handle_GameOver(object sender, EventArgs e)
     {
+        _isLowTimeWarningActive = false;
         PlaySFX(sfxGameOver);
         PlayMusic(musicGameOver);
     }
 
     private void Handle_YouWin(object sender, EventArgs e)
     {
+        _isLowTimeWarningActive = false;
         PlaySFX(sfxYouWin);
         PlayMusic(musicYouWin);
     }
@@ -369,10 +383,33 @@ public class AudioManager : MonoBehaviour
         };
     }
 
+    private void ShufflePlaylists()
+    {
+        _shuffledEarly = ShuffleArray(musicGameplayEarly);
+        _shuffledMid = ShuffleArray(musicGameplayMid);
+        _shuffledLate = ShuffleArray(musicGameplayLate);
+    }
+
+    private AudioClip[] ShuffleArray(AudioClip[] source)
+    {
+        AudioClip[] result = (AudioClip[])source.Clone();
+        for (int i = result.Length - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            AudioClip temp = result[i];
+            result[i] = result[j];
+            result[j] = temp;
+        }
+        return result;
+    }
+
     private AudioClip GetGameplayMusicForLevel(int level)
     {
-        if (level <= 4) return musicGameplayEarly;
-        if (level <= 8) return musicGameplayMid;
-        return musicGameplayLate;
+        if (_shuffledEarly == null || _shuffledMid == null || _shuffledLate == null)
+            ShufflePlaylists();
+
+        if (level <= 4) return _shuffledEarly[level - 1];
+        if (level <= 8) return _shuffledMid[level - 5];
+        return _shuffledLate[level - 9];
     }
 }

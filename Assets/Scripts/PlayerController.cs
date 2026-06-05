@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -78,6 +79,8 @@ public class PlayerController : MonoBehaviour
     public event EventHandler OnFuelDepleted;
 
     private SpriteRenderer spriteRenderer;
+    private bool _isBlinking = false;
+    private Coroutine _blinkCoroutine;
 
     public event EventHandler<OnUpgradeMaxedOutArgs> OnUpgradeMaxedOut;
     public class OnUpgradeMaxedOutArgs : EventArgs
@@ -185,14 +188,12 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerController_OnShieldChanged(object sender, OnShieldChangedEventArgs e)
     {
+        if (fuelAmount <= 40f) return;
+
         if (e.ShieldCount > 0)
-        {
             spriteRenderer.color = new Color32(0x00, 0x8C, 0xFF, 0xFF);
-        }
         else
-        {
             spriteRenderer.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
-        }
     }
 
     public void StartLevel()
@@ -212,6 +213,7 @@ public class PlayerController : MonoBehaviour
 
     public void GameOver()
     {
+        StopBlink();
         StopAllCoroutines();
         isLevelRunning = false;
         fuelAmount = maxFuelAmount;
@@ -220,6 +222,7 @@ public class PlayerController : MonoBehaviour
 
     public void EndLevel()
     {
+        StopBlink();
         StopAllCoroutines();
         isLevelRunning = false;
     }
@@ -326,13 +329,14 @@ public class PlayerController : MonoBehaviour
     {
         fuelAmount += fuelCellAmount;
         if (fuelAmount > maxFuelAmount)
-        {
             fuelAmount = maxFuelAmount;
-        }
+
         if (fuelText != null)
-        {
             fuelText.text = Mathf.RoundToInt(fuelAmount).ToString();
-        }
+
+        if (fuelAmount > 40f)
+            StopBlink();
+
         OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
     }
 
@@ -340,18 +344,54 @@ public class PlayerController : MonoBehaviour
     {
         fuelAmount -= fuelLoss;
         if (fuelAmount < 0f)
-        {
             fuelAmount = 0f;
-        }
+
         if (fuelText != null)
-        {
             fuelText.text = Mathf.RoundToInt(fuelAmount).ToString();
-        }
+
+        if (fuelAmount <= 40f)
+            StartBlink();
+
         if (fuelAmount == 0f && isLevelRunning)
-        {
             OnFuelDepleted?.Invoke(this, EventArgs.Empty);
-        }
+
         OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
+    }
+
+    IEnumerator BlinkRoutine()
+    {
+        while (true)
+        {
+            spriteRenderer.DOKill();
+            spriteRenderer.color = ColorPalette.Pink;
+            Color32 targetColor = shieldCount > 0
+                ? new Color32(0x00, 0x8C, 0xFF, 0xFF)
+                : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+            spriteRenderer.DOColor(targetColor, 0.25f);
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void StartBlink()
+    {
+        if (_isBlinking) return;
+        _isBlinking = true;
+        _blinkCoroutine = StartCoroutine(BlinkRoutine());
+    }
+
+    private void StopBlink()
+    {
+        if (!_isBlinking) return;
+        _isBlinking = false;
+        if (_blinkCoroutine != null)
+        {
+            StopCoroutine(_blinkCoroutine);
+            _blinkCoroutine = null;
+        }
+        spriteRenderer.DOKill();
+        spriteRenderer.color = shieldCount > 0
+            ? new Color32(0x00, 0x8C, 0xFF, 0xFF)
+            : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
     }
 
     private bool UseShield(float dmgAmt, bool isTrueDamage, HitSource hitSource)
