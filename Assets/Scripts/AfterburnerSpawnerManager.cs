@@ -6,6 +6,7 @@ public class AfterburnerSpawnerManager : MonoBehaviour
     [SerializeField] private GameObject afterburnerPrefab;
     [SerializeField] private GameObject afterburnerSpawn;
     [SerializeField] private GameObject gameManager;
+    [SerializeField] private GameObject player;
     private GameManager gameManagerScript;
 
     void Start()
@@ -29,6 +30,8 @@ public class AfterburnerSpawnerManager : MonoBehaviour
     void SpawnAfterburner()
     {
         GameObject afterburner = Instantiate(afterburnerPrefab, afterburnerSpawn.transform.position, Quaternion.identity);
+        Color32 shipColor = player.GetComponent<SpriteRenderer>().color;
+        afterburner.GetComponent<AfterburnerController>().SetColor(shipColor);
         Destroy(afterburner, 0.4f);
     }
 }

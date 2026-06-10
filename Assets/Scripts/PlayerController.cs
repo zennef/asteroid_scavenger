@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool _isBlinking = false;
     private Coroutine _blinkCoroutine;
+    private Coroutine _flashCoroutine;
 
     public event EventHandler<OnUpgradeMaxedOutArgs> OnUpgradeMaxedOut;
     public class OnUpgradeMaxedOutArgs : EventArgs
@@ -282,6 +283,8 @@ public class PlayerController : MonoBehaviour
         transform.position = targetPos;
         lanePosition = newLaneTarget;
         isMoving = false;
+
+        playerModel.transform.DOPunchScale(new Vector3(0.02f, -0.0125f, 0f), 0.15f, 2, 0.3f);
     }
 
     IEnumerator WaitForSecondsPaused(float duration)
@@ -394,6 +397,28 @@ public class PlayerController : MonoBehaviour
             : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
     }
 
+    private IEnumerator FlashTwiceRoutine(Color32 color)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            spriteRenderer.DOKill();
+            spriteRenderer.DOColor(color, 0.08f);
+            yield return new WaitForSeconds(0.08f);
+            Color32 restingColor = shieldCount > 0 ? ColorPalette.Blue : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+            spriteRenderer.DOKill();
+            spriteRenderer.DOColor(restingColor, 0.08f);
+            yield return new WaitForSeconds(0.08f);
+        }
+    }
+
+    private void TriggerFlash(Color32 color)
+    {
+        if (_isBlinking) return;
+        if (_flashCoroutine != null)
+            StopCoroutine(_flashCoroutine);
+        _flashCoroutine = StartCoroutine(FlashTwiceRoutine(color));
+    }
+
     private bool UseShield(float dmgAmt, bool isTrueDamage, HitSource hitSource)
     {
         if (shieldCount > 0)
@@ -436,17 +461,20 @@ public class PlayerController : MonoBehaviour
         {
             bool blocked = UseShield(rockImpactFuelLoss, false, HitSource.Rock);
             oc?.Consume(blocked ? "BLOCKED!" : $"-{Mathf.RoundToInt(rockImpactFuelLoss)}", blocked ? ColorPalette.Blue : ColorPalette.Pink);
+            if (!blocked) TriggerFlash(ColorPalette.Pink);
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
             bool blocked = UseShield(wallImpactFuelLoss, isWallTrueDamage, HitSource.Wall);
             oc?.Consume(blocked ? "BLOCKED!" : $"-{Mathf.RoundToInt(wallImpactFuelLoss)}", blocked ? ColorPalette.Blue : ColorPalette.Pink);
+            if (!blocked) TriggerFlash(ColorPalette.Pink);
         }
         else if (other.gameObject.CompareTag("Fuel"))
         {
             AddFuel();
             OnFuelCellCollected?.Invoke(this, EventArgs.Empty);
             oc?.Consume($"+{Mathf.RoundToInt(fuelCellAmount)}", ColorPalette.Green);
+            TriggerFlash(ColorPalette.Green);
         }
         else if (other.gameObject.CompareTag("Crystal"))
         {
@@ -459,6 +487,7 @@ public class PlayerController : MonoBehaviour
             OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
             OnCrystalCollectedSfx?.Invoke(this, EventArgs.Empty);
             oc?.Consume("+1", ColorPalette.Cyan);
+            TriggerFlash(ColorPalette.Cyan);
         }
     }
 

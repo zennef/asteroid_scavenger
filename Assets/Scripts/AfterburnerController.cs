@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class AfterburnerController : MonoBehaviour
 {
@@ -9,6 +9,11 @@ public class AfterburnerController : MonoBehaviour
     void Start()
     {
         StartCoroutine(ShrinkOverTime(duration));
+    }
+
+    public void SetColor(Color32 color)
+    {
+        GetComponent<SpriteRenderer>().color = color;
     }
 
     IEnumerator ShrinkOverTime(float time)
