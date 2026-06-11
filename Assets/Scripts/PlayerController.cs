@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
     private bool _isBlinking = false;
     private Coroutine _blinkCoroutine;
     private Coroutine _flashCoroutine;
+    private Coroutine _fuelFlashCoroutine;
 
     public event EventHandler<OnUpgradeMaxedOutArgs> OnUpgradeMaxedOut;
     public class OnUpgradeMaxedOutArgs : EventArgs
@@ -221,7 +222,6 @@ public class PlayerController : MonoBehaviour
         fuelAmount = maxFuelAmount;
         OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
         shieldCount = maxShieldCount;
-        fuelText.text = Mathf.RoundToInt(fuelAmount).ToString();
         OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
         OnShieldChanged?.Invoke(this, new OnShieldChangedEventArgs { ShieldCount = shieldCount });
         isLevelRunning = true;
@@ -331,15 +331,9 @@ public class PlayerController : MonoBehaviour
             yield return WaitForSecondsPaused(1f);
             LoseFuel(fuelConsumptionPerSecond);
 
-            if (fuelText != null)
-            {
-                fuelText.text = Mathf.RoundToInt(fuelAmount).ToString();
-            }
-
             if (fuelAmount <= 0)
             {
                 fuelAmount = 0;
-                fuelText.text = "0";
             }
         }
     }
@@ -357,9 +351,6 @@ public class PlayerController : MonoBehaviour
         if (fuelAmount > maxFuelAmount)
             fuelAmount = maxFuelAmount;
 
-        if (fuelText != null)
-            fuelText.text = Mathf.RoundToInt(fuelAmount).ToString();
-
         if (fuelAmount > 40f)
             StopBlink();
 
@@ -371,9 +362,6 @@ public class PlayerController : MonoBehaviour
         fuelAmount -= fuelLoss;
         if (fuelAmount < 0f)
             fuelAmount = 0f;
-
-        if (fuelText != null)
-            fuelText.text = Mathf.RoundToInt(fuelAmount).ToString();
 
         if (fuelAmount <= 40f)
             StartBlink();
@@ -442,6 +430,45 @@ public class PlayerController : MonoBehaviour
         _flashCoroutine = StartCoroutine(FlashTwiceRoutine(color));
     }
 
+    private void FlashFuelText(string text, Color32 color)
+    {
+        if (_fuelFlashCoroutine != null) StopCoroutine(_fuelFlashCoroutine);
+        DOTween.Kill(fuelText.transform);
+        DOTween.Kill(fuelText);
+        fuelText.transform.localScale = Vector3.one;
+        fuelText.color = new Color(fuelText.color.r, fuelText.color.g, fuelText.color.b, 1f);
+        _fuelFlashCoroutine = StartCoroutine(FlashFuelTextRoutine(text, color));
+    }
+
+    private IEnumerator FlashFuelTextRoutine(string text, Color32 color)
+    {
+        fuelText.text = text;
+        Color fullColor = new Color32(color.r, color.g, color.b, 255);
+        Color lightColor = Color.Lerp(fullColor, Color.white, 0.85f);
+        lightColor.a = 1f;
+        fuelText.color = lightColor;
+        fuelText.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0f), 0.2f, 1, 0.3f).SetUpdate(false);
+        DOTween.Sequence()
+            .Append(fuelText.DOColor(Color.white, 0.05f).SetUpdate(false))
+            .AppendInterval(0.08f)
+            .Append(fuelText.DOColor(fullColor, 0.05f).SetUpdate(false))
+            .Append(fuelText.DOColor(Color.white, 0.05f).SetUpdate(false))
+            .AppendInterval(0.08f)
+            .Append(fuelText.DOColor(fullColor, 0.05f).SetUpdate(false))
+            .SetUpdate(false);
+        fuelText.DOFade(0f, 0.4f)
+            .SetEase(Ease.OutQuad)
+            .SetDelay(0.65f)
+            .SetUpdate(false)
+            .OnComplete(() =>
+            {
+                fuelText.color = Color.white;
+                fuelText.text = "";
+                _fuelFlashCoroutine = null;
+            });
+        yield break;
+    }
+
     private bool UseShield(float dmgAmt, bool isTrueDamage, HitSource hitSource)
     {
         if (shieldCount > 0)
@@ -483,21 +510,26 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Rock"))
         {
             bool blocked = UseShield(rockImpactFuelLoss, false, HitSource.Rock);
-            oc?.Consume(blocked ? "BLOCKED!" : $"-{Mathf.RoundToInt(rockImpactFuelLoss)}", blocked ? ColorPalette.Blue : ColorPalette.Pink);
+            oc?.Consume("", ColorPalette.Pink);
             if (!blocked) TriggerFlash(ColorPalette.Pink);
+            if (!blocked) FlashFuelText("-" + Mathf.RoundToInt(rockImpactFuelLoss).ToString(), ColorPalette.Pink);
+            if (blocked) FlashFuelText("BLOCKED!", ColorPalette.Blue);
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
             bool blocked = UseShield(wallImpactFuelLoss, isWallTrueDamage, HitSource.Wall);
-            oc?.Consume(blocked ? "BLOCKED!" : $"-{Mathf.RoundToInt(wallImpactFuelLoss)}", blocked ? ColorPalette.Blue : ColorPalette.Pink);
+            oc?.Consume("", ColorPalette.Pink);
             if (!blocked) TriggerFlash(ColorPalette.Pink);
+            if (!blocked) FlashFuelText("-" + Mathf.RoundToInt(wallImpactFuelLoss).ToString(), ColorPalette.Pink);
+            if (blocked) FlashFuelText("BLOCKED!", ColorPalette.Blue);
         }
         else if (other.gameObject.CompareTag("Fuel"))
         {
             AddFuel();
             OnFuelCellCollected?.Invoke(this, EventArgs.Empty);
-            oc?.Consume($"+{Mathf.RoundToInt(fuelCellAmount)}", ColorPalette.Green);
+            oc?.Consume("", ColorPalette.Green);
             TriggerFlash(ColorPalette.Green);
+            FlashFuelText("+" + Mathf.RoundToInt(fuelCellAmount).ToString(), ColorPalette.Green);
         }
         else if (other.gameObject.CompareTag("Crystal"))
         {
@@ -509,8 +541,9 @@ public class PlayerController : MonoBehaviour
             crystalCount++;
             OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
             OnCrystalCollectedSfx?.Invoke(this, EventArgs.Empty);
-            oc?.Consume("+1", ColorPalette.Cyan);
+            oc?.Consume("", ColorPalette.Cyan);
             TriggerFlash(ColorPalette.Cyan);
+            FlashFuelText("+1", ColorPalette.Cyan);
         }
     }
 
