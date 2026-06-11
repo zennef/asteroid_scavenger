@@ -4,11 +4,15 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private int playerY;
     [SerializeField] private GameObject playerModel;
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private GameObject leftButton;
+    [SerializeField] private GameObject rightButton;
     [SerializeField] private GameObject currentFuel;
     [SerializeField] private float maxFuelAmount = 100f;
     [SerializeField] private float fuelCellAmount = 40f;
@@ -133,6 +137,12 @@ public class PlayerController : MonoBehaviour
     public void SetIsGamePaused(bool paused)
     {
         isGamePaused = paused;
+        if (pauseButton != null)
+            pauseButton.interactable = !paused;
+        if (leftButton != null)
+            leftButton.SetActive(!paused);
+        if (rightButton != null)
+            rightButton.SetActive(!paused);
         OnGamePaused?.Invoke(this, new OnGamePausedArgs { IsGamePaused = isGamePaused});
     }
 
@@ -151,6 +161,12 @@ public class PlayerController : MonoBehaviour
         if (!isGamePaused && isLevelRunning && interaction.IsPressed())
         {
             isGamePaused = true;
+            if (pauseButton != null)
+                pauseButton.interactable = false;
+            if (leftButton != null)
+                leftButton.SetActive(false);
+            if (rightButton != null)
+                rightButton.SetActive(false);
             OnGamePaused?.Invoke(this, new OnGamePausedArgs { IsGamePaused = isGamePaused });
         }
         if (!isGamePaused && isLevelRunning)
@@ -209,6 +225,9 @@ public class PlayerController : MonoBehaviour
         OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
         OnShieldChanged?.Invoke(this, new OnShieldChangedEventArgs { ShieldCount = shieldCount });
         isLevelRunning = true;
+        if (pauseButton != null) pauseButton.interactable = true;
+        if (leftButton != null) leftButton.SetActive(true);
+        if (rightButton != null) rightButton.SetActive(true);
         StartCoroutine(DrainFuelRoutine());
     }
 
@@ -217,8 +236,9 @@ public class PlayerController : MonoBehaviour
         StopBlink();
         StopAllCoroutines();
         isLevelRunning = false;
-        fuelAmount = maxFuelAmount;
-        OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
+        if (pauseButton != null) pauseButton.interactable = false;
+        if (leftButton != null) leftButton.SetActive(false);
+        if (rightButton != null) rightButton.SetActive(false);
     }
 
     public void EndLevel()
@@ -226,6 +246,9 @@ public class PlayerController : MonoBehaviour
         StopBlink();
         StopAllCoroutines();
         isLevelRunning = false;
+        if (pauseButton != null) pauseButton.interactable = false;
+        if (leftButton != null) leftButton.SetActive(false);
+        if (rightButton != null) rightButton.SetActive(false);
     }
 
     public void ResetAllPlayerStats()

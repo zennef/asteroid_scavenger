@@ -252,7 +252,7 @@ public class CanvasManager : MonoBehaviour
     {
         float seconds = Mathf.FloorToInt(gameManagerScript.timeRemaining);
         timeText.text = string.Format("{0:00}", seconds);
-        timeText.color = gameManagerScript.timeRemaining <= 10 ? ColorPalette.Pink : ColorPalette.White;
+        timeText.color = gameManagerScript.timeRemaining <= 10 ? ColorPalette.Pink : ColorPalette.Amber;
     }
 
     private void PlayerController_OnUpgradeMaxedOut(object sender, PlayerController.OnUpgradeMaxedOutArgs e)
