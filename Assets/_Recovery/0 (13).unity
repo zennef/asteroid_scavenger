@@ -551,7 +551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Pivot.x
@@ -843,7 +843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
-      value: This upgrade gives you another shield. You can have a max of 3.
+      value: This gives you another shield. You can have a max of 3.
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgument
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Shield Charges
+  upgradeName: Chield Charges
   player: {fileID: 514381696}
   cost: 4
   upgradePrefab: {fileID: 0}
@@ -16231,7 +16231,7 @@ MonoBehaviour:
   wallImpactFuelLossLevel: 1
   wallImpactFuelLossMaxLevel: 10
   fuelConsumptionLevel: 1
-  fuelConsumptionMaxLevel: 3
+  fuelConsumptionMaxLevel: 2
   isWallTrueDamageLevel: 1
   isWallTrueDamageMaxLevel: 2
   maxShieldCountLevel: 1
@@ -19052,8 +19052,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
-      value: Rock shields only block rock damage. This Asteroid Shields upgrade enables
-        shields to now block both rock and asteroid damage.
+      value: Rock shields only block rock damage. This upgrade enables shields to
+        now block both rock and asteroid damage.
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgument
@@ -20628,8 +20628,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
-      value: This Fuel Efficiency upgrade lowers how much fuel you lose every second
-        while flying through the level.
+      value: This upgrade lowers how much fuel you lose every second while flying
+        through the level.
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgument
@@ -20645,7 +20645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
-      value: FUEL CONSUMPTION
+      value: FUEL EFFICIENCY
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_fontSize
@@ -20677,7 +20677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Name
-      value: ConfirmationFuelEfficiency
+      value: ConfirmationLowerFuelConsumption
       objectReference: {fileID: 0}
     - target: {fileID: 7017576375415726027, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Color.b
@@ -22563,7 +22563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
-      value: The Fuel Tank upgrade increases the max amount of fuel your ship can
+      value: The Fueld Tank upgrade increases the max amount of fuel your ship can
         hold.
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
@@ -24038,7 +24038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1120719199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24060,7 +24060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 75}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1123163192
@@ -24359,11 +24359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
-      value: CRYSTAL FUEL
+      value: CRYSTALS GIVE FUEL
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
-      value: This Crystal Fuel upgrade allows you to also gain fuel from crystals.
+      value: This upgrade allows you to also gain fuel from crystals.
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgument
@@ -24379,7 +24379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
-      value: CRYSTAL FUEL
+      value: CRYSTALS GIVE FUEL
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_fontSize
@@ -30006,7 +30006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
-      value: SHIELD CHARGE SPEED
+      value: SHIELD RECHARGE RATE
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_fontSize
@@ -31315,7 +31315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Name
-      value: FuelEfficiency
+      value: LowerFuelConsumption
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_IsActive
@@ -36170,7 +36170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
-      value: CRYSTAL FUEL
+      value: CRYSTALS GIVE FUEL
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_fontSize

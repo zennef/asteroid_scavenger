@@ -219,6 +219,7 @@ public class CanvasManager : MonoBehaviour
         else if (e.UpgradeName == "Crystal Fuel Cells")
         {
             hideCrystalFuelCellValue.SetActive(false);
+            keyCrystalValueText.text = "+" + playerController.GetFuelCellAmount().ToString();
         }
         else if (e.UpgradeName == "Asteroid Shield")
         {

@@ -9,8 +9,7 @@ public class UpgradeController : MonoBehaviour
     private PlayerController playerController;
     private int playerCrystalCount;
     private Button upgradeButton;
-
-
+    private bool _isPurchased = false;
 
     void Start()
     {
@@ -33,6 +32,7 @@ public class UpgradeController : MonoBehaviour
 
     private void PlayerController_OnCrystalCountChange(object sender, PlayerController.OnCrystalCollectedEventArgs e)
     {
+        if (_isPurchased) return;
         playerCrystalCount = e.CrystalCount;
         if (playerCrystalCount < cost) {
             upgradeButton.interactable = false;
@@ -41,6 +41,7 @@ public class UpgradeController : MonoBehaviour
 
     public void PurchaseUpgrade()
     {
+        _isPurchased = true;
         upgradeButton.interactable = false;
         playerController.DecreaseCrystalCount(cost);
     }

@@ -11,6 +11,7 @@ public class ConfirmationButtonController : MonoBehaviour
     private PlayerController playerController;
     private int playerCrystalCount;
     private Button button;
+    private bool _isPurchased = false;
     [SerializeField] private GameObject selfPrefab;
     [SerializeField] private bool isLegendary;
 
@@ -31,6 +32,7 @@ public class ConfirmationButtonController : MonoBehaviour
 
     private void PlayerController_OnCrystalCountChange(object sender, PlayerController.OnCrystalCollectedEventArgs e)
     {
+        if (_isPurchased) return;
         playerCrystalCount = e.CrystalCount;
         if (playerCrystalCount < cost)
         {
@@ -42,6 +44,7 @@ public class ConfirmationButtonController : MonoBehaviour
     {
         if (e.UpgradeName == upgradeName)
         {
+            _isPurchased = true;
             button.interactable = false;
         }
     }
