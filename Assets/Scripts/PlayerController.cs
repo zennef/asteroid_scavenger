@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isWallTrueDamage = true;
     [SerializeField] private float moveDuration = 0.625f;
     [SerializeField] private float fuelConsumptionPerSecond = 5f;
-    [SerializeField] private bool isCrystalAFuelCell = false;
+    private float crystalFuelMultiplier = 0f;
 
     public int moveSpeedDurationLevel = 1;
     public int moveSpeedDurationMaxLevel = 10;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public int maxShieldCountLevel = 1;
     public int maxShieldCountMaxLevel = 3;
     public int isCrystalAFuelCellLevel = 1;
-    public int isCrystalAFuelCellMaxLevel = 2;
+    public int isCrystalAFuelCellMaxLevel = 3;
 
     private Vector2Int lanePosition;
     private bool isMoving = false;
@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
         maxShieldCount = 1;
         shieldRegenInterval = 10f;
         crystalCount = 0;
-        isCrystalAFuelCell = false;
+        crystalFuelMultiplier = 0f;
         OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
         OnShieldChanged?.Invoke(this, new OnShieldChangedEventArgs { ShieldCount = shieldCount });
         OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
@@ -533,9 +533,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Crystal"))
         {
-            if (isCrystalAFuelCell)
+            if (crystalFuelMultiplier > 0f)
             {
-                AddFuel();
+                fuelAmount += fuelCellAmount * crystalFuelMultiplier;
+                if (fuelAmount > maxFuelAmount) fuelAmount = maxFuelAmount;
+                if (fuelAmount > 40f) StopBlink();
+                OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
                 OnFuelCellCollected?.Invoke(this, EventArgs.Empty);
             }
             crystalCount++;
@@ -670,8 +673,7 @@ public class PlayerController : MonoBehaviour
         {
             OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 3 });
         }
-
-        isCrystalAFuelCell = true;
+        crystalFuelMultiplier = isCrystalAFuelCellLevel == 2 ? 0.5f : 1.0f;
         OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Crystal Fuel Cells", UpgradeLevel = isCrystalAFuelCellLevel });
     }
 
@@ -735,9 +737,14 @@ public class PlayerController : MonoBehaviour
         return isWallTrueDamage;
     }
 
-    public bool GetIsCrystalAFuelCell()
+    public float GetCrystalFuelMultiplier()
     {
-        return isCrystalAFuelCell;
+        return crystalFuelMultiplier;
+    }
+
+    public float GetCrystalFuelAmount()
+    {
+        return fuelCellAmount * crystalFuelMultiplier;
     }
 
     public float GetShieldRechargeInterval()

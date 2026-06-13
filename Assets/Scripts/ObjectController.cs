@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -22,9 +23,37 @@ public class ObjectController : MonoBehaviour
     private void OnEnable()
     {
         IsConsumed = false;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) spriteRenderer.enabled = true;
         if (col != null) col.enabled = true;
         if (label != null) label.enabled = false;
+        if (gameObject.CompareTag("Crystal") || gameObject.CompareTag("Fuel"))
+        {
+            Color restingColor = gameObject.CompareTag("Crystal") ? (Color)ColorPalette.Cyan : (Color)ColorPalette.Green;
+            float interval = gameObject.CompareTag("Crystal") ? 0.5f : 1f;
+            spriteRenderer.color = restingColor;
+            DOTween.Kill(spriteRenderer);
+            var seq = DOTween.Sequence()
+                .AppendInterval(interval)
+                .Append(spriteRenderer.DOColor(Color.white, 0.05f))
+                .Append(spriteRenderer.DOColor(restingColor, 0.05f));
+            if (gameObject.CompareTag("Crystal"))
+            {
+                seq.Append(spriteRenderer.DOColor(Color.white, 0.05f))
+                   .Append(spriteRenderer.DOColor(restingColor, 0.05f));
+            }
+            seq.SetLoops(-1, LoopType.Restart)
+               .SetUpdate(true)
+               .SetAutoKill(false)
+               .SetTarget(spriteRenderer);
+        }
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Kill(spriteRenderer);
+        if (gameObject.CompareTag("Crystal") || gameObject.CompareTag("Fuel"))
+            spriteRenderer.color = gameObject.CompareTag("Crystal") ? (Color)ColorPalette.Cyan : (Color)ColorPalette.Green;
     }
 
     void Start()
@@ -48,7 +77,7 @@ public class ObjectController : MonoBehaviour
         }
     }
 
-    public void Consume(string text, Color32 color)
+public void Consume(string text, Color32 color)
     {
         IsConsumed = true;
         spriteRenderer.enabled = false;

@@ -199,6 +199,8 @@ public class CanvasManager : MonoBehaviour
     {
         ResetHUDKeyValues();
         ResetAvailableUpgradeLists();
+        ShowPanelInstant(playerStats);
+        HidePanel(playerStats, new Vector2(0, -SLIDE_DISTANCE));
     }
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
@@ -219,7 +221,7 @@ public class CanvasManager : MonoBehaviour
         else if (e.UpgradeName == "Crystal Fuel Cells")
         {
             hideCrystalFuelCellValue.SetActive(false);
-            keyCrystalValueText.text = "+" + playerController.GetFuelCellAmount().ToString();
+            keyCrystalValueText.text = "+" + playerController.GetCrystalFuelAmount().ToString();
         }
         else if (e.UpgradeName == "Asteroid Shield")
         {

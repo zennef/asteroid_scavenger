@@ -8,6 +8,7 @@ public class StatDisplayController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject gameManager;
+    [SerializeField] private bool isLegendary;
     private PlayerController playerController;
     private GameManager gameManagerScript;
 
@@ -24,14 +25,14 @@ public class StatDisplayController : MonoBehaviour
 
     private void GameManagerScript_OnGameStart(object sender, EventArgs e)
     {
-        valueText.text = "1";
+        valueText.text = isLegendary ? "0" : "1";
     }
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if(e.UpgradeName == upgradeName)
+if (e.UpgradeName == upgradeName)
         {
-            valueText.text = e.UpgradeLevel.ToString();
+            valueText.text = isLegendary ? (e.UpgradeLevel - 1).ToString() : e.UpgradeLevel.ToString();
         }
     }
 

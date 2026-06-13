@@ -499,10 +499,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
@@ -514,11 +518,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1120719198}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 147366546}
+    - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenSpecialShop
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
@@ -530,7 +542,15 @@ PrefabInstance:
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
@@ -2419,7 +2439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
   m_sharedMaterial: {fileID: -4285171987741343902, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
@@ -9151,6 +9171,7 @@ MonoBehaviour:
   valueText: {fileID: 1840072066}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &305274024 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
@@ -9776,6 +9797,7 @@ MonoBehaviour:
   valueText: {fileID: 182542343}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &356311258
 GameObject:
   m_ObjectHideFlags: 0
@@ -10069,6 +10091,7 @@ MonoBehaviour:
   valueText: {fileID: 917568950}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &391020780
 GameObject:
   m_ObjectHideFlags: 0
@@ -10514,6 +10537,7 @@ MonoBehaviour:
   valueText: {fileID: 1123163194}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &452956144
 GameObject:
   m_ObjectHideFlags: 0
@@ -15764,7 +15788,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
   m_sharedMaterial: {fileID: -4285171987741343902, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
@@ -16217,7 +16241,6 @@ MonoBehaviour:
   isWallTrueDamage: 1
   moveDuration: 0.625
   fuelConsumptionPerSecond: 5
-  isCrystalAFuelCell: 0
   moveSpeedDurationLevel: 1
   moveSpeedDurationMaxLevel: 10
   shieldRegenIntervalLevel: 1
@@ -16237,7 +16260,7 @@ MonoBehaviour:
   maxShieldCountLevel: 1
   maxShieldCountMaxLevel: 3
   isCrystalAFuelCellLevel: 1
-  isCrystalAFuelCellMaxLevel: 2
+  isCrystalAFuelCellMaxLevel: 3
   maxShieldCount: 1
   shieldRegenInterval: 10
   InputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -17762,6 +17785,7 @@ MonoBehaviour:
   valueText: {fileID: 924326906}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &583636894
 GameObject:
   m_ObjectHideFlags: 0
@@ -25242,6 +25266,7 @@ MonoBehaviour:
   valueText: {fileID: 1703555718}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &1197857769
 GameObject:
   m_ObjectHideFlags: 0
@@ -31898,7 +31923,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
   m_sharedMaterial: {fileID: -4285171987741343902, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
@@ -32699,6 +32724,7 @@ MonoBehaviour:
   valueText: {fileID: 503892456}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &1778674031
 GameObject:
   m_ObjectHideFlags: 0
@@ -33000,6 +33026,7 @@ MonoBehaviour:
   valueText: {fileID: 488443866}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &1840072064
 GameObject:
   m_ObjectHideFlags: 0
@@ -33057,7 +33084,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
   m_sharedMaterial: {fileID: -4285171987741343902, guid: d21cc4d496a24ef4f92b9977c68ff75c, type: 2}
@@ -33194,7 +33221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHIELD CHARGES :'
+  m_text: 'EXTRA SHIELD CHARGES :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19ae41770032f9242bd65c1807a50436, type: 2}
   m_sharedMaterial: {fileID: 1756480500961514540, guid: 19ae41770032f9242bd65c1807a50436, type: 2}
@@ -34268,6 +34295,7 @@ MonoBehaviour:
   valueText: {fileID: 1111408374}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &1932549861
 GameObject:
   m_ObjectHideFlags: 0
@@ -36504,6 +36532,7 @@ MonoBehaviour:
   valueText: {fileID: 1023152556}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1001 &2081207894
 PrefabInstance:
   m_ObjectHideFlags: 0
