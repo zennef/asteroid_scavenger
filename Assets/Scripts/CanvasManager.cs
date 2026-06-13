@@ -358,8 +358,8 @@ public class CanvasManager : MonoBehaviour
 
     private void UpdateCrystalText(int crystalCount)
     {
-        hudCrystalText.text = "CRYSTALS: " + crystalCount.ToString();
-        shopCrystalText.text = "CRYSTALS: " + crystalCount.ToString();
+        hudCrystalText.text = crystalCount.ToString();
+        shopCrystalText.text = crystalCount.ToString();
     }
 
     private void UpdateHUDCurrentLevel(int level)
