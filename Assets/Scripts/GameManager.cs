@@ -150,7 +150,6 @@ public class GameManager : MonoBehaviour
         playerController.GameOver();
         objectSpawnerManager.SetWallSpawnRate(wallLevelDefaultSpawnRate);
         objectSpawnerManager.SetRockSpawnRate(rockLevelDefaultSpawnRate);
-        timeRemaining = 45f;
         isTimerRunning = false;
     }
 
