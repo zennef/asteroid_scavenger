@@ -88,6 +88,24 @@ public class CanvasManager : MonoBehaviour
         EnsureCanvasGroup(levelComplete);
     }
 
+    private void OnDestroy()
+    {
+        if (gameManagerScript != null)
+        {
+            gameManagerScript.OnCurrentLevelIncrease -= GameManagerScript_OnCurrentLevelIncrease;
+            gameManagerScript.OnGameStart -= GameManagerScript_OnGameStart;
+            gameManagerScript.OnGameOver -= GameManagerScript_OnGameOver;
+            gameManagerScript.OnYouWin -= GameManagerScript_OnYouWin;
+        }
+        if (playerController != null)
+        {
+            playerController.OnCrystalCollected -= PlayerController_OnCrystalCollected;
+            playerController.OnUpgradeMaxedOut -= PlayerController_OnUpgradeMaxedOut;
+            playerController.OnUpgradePurchased -= PlayerController_OnUpgradePurchased;
+            playerController.OnGamePaused -= PlayerController_OnGamePaused;
+        }
+    }
+
     // ---------------------------------------------------------------------------
     // Animation helpers
     // ---------------------------------------------------------------------------
@@ -266,6 +284,27 @@ public class CanvasManager : MonoBehaviour
     private void PlayerController_OnCrystalCollected(object sender, PlayerController.OnCrystalCollectedEventArgs e)
     {
         UpdateCrystalText(e.CrystalCount);
+        FlashCrystalText();
+    }
+
+    private void FlashCrystalText()
+    {
+        DOTween.Kill(hudCrystalText, complete: false);
+        DOTween.Kill(shopCrystalText, complete: false);
+        hudCrystalText.color = Color.white;
+        shopCrystalText.color = Color.white;
+
+        DOTween.Sequence()
+            .Append(hudCrystalText.DOColor(ColorPalette.Cyan, 0.07f).SetUpdate(true))
+            .AppendInterval(0.35f)
+            .Append(hudCrystalText.DOColor(Color.white, 0.25f).SetUpdate(true))
+            .SetUpdate(true);
+
+        DOTween.Sequence()
+            .Append(shopCrystalText.DOColor(ColorPalette.Cyan, 0.07f).SetUpdate(true))
+            .AppendInterval(0.35f)
+            .Append(shopCrystalText.DOColor(Color.white, 0.25f).SetUpdate(true))
+            .SetUpdate(true);
     }
 
     private void GameManagerScript_OnCurrentLevelIncrease(object sender, GameManager.OnCurrentLevelIncreaseEventArgs e)

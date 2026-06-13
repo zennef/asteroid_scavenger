@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,11 +23,26 @@ public class FuelBarController : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         playerController.OnFuelChanged += PlayerController_OnFuelChanged;
         playerController.OnUpgradePurchased += PlayerController_OnUpgradePurchased;
+        playerController.OnFuelCellCollected += PlayerController_OnFuelCellCollected;
+        playerController.OnPlayerHitByRock += PlayerController_OnPlayerHitByWall;
+        playerController.OnPlayerHitByWall += PlayerController_OnPlayerHitByWall;
 
         gameManagerScript = gameManager.GetComponent<GameManager>();
         gameManagerScript.OnGameOver += GameManagerScript_OnGameOver;
 
         fuelBarFillImage = fuelBarFill.GetComponent<Image>();
+    }
+
+    private void OnDestroy()
+    {
+        if (playerController != null)
+        {
+            playerController.OnFuelChanged -= PlayerController_OnFuelChanged;
+            playerController.OnUpgradePurchased -= PlayerController_OnUpgradePurchased;
+            playerController.OnFuelCellCollected -= PlayerController_OnFuelCellCollected;
+            playerController.OnPlayerHitByRock -= PlayerController_OnPlayerHitByWall;
+            playerController.OnPlayerHitByWall -= PlayerController_OnPlayerHitByWall;
+        }
     }
 
     private void GameManagerScript_OnGameOver(object sender, EventArgs e)
@@ -68,5 +84,26 @@ public class FuelBarController : MonoBehaviour
     {
         slider.value = fuelAmount;
         fuelText.text = fuelAmount.ToString();
+    }
+
+    private void FlashFuelText(Color32 color)
+    {
+        DOTween.Kill(fuelText, complete: false);
+        fuelText.color = Color.white;
+        DOTween.Sequence()
+            .Append(fuelText.DOColor(color, 0.07f).SetUpdate(true))
+            .AppendInterval(0.35f)
+            .Append(fuelText.DOColor(Color.white, 0.25f).SetUpdate(true))
+            .SetUpdate(true);
+    }
+
+    private void PlayerController_OnFuelCellCollected(object sender, EventArgs e)
+    {
+        FlashFuelText(ColorPalette.Green);
+    }
+
+    private void PlayerController_OnPlayerHitByWall(object sender, EventArgs e)
+    {
+        FlashFuelText(ColorPalette.Pink);
     }
 }
