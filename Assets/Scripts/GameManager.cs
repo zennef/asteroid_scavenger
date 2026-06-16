@@ -99,25 +99,10 @@ public class GameManager : MonoBehaviour
 
     private void IncreaseObstacleSpawnRate()
     {
-        float t = (currentLevel - 1) / 11f; // 0 → 1 over 12 levels
-        //float easedT = t * t; // ease-in
+        float t = (currentLevel - 1) / 11f;
 
-        // 0.15 = easier early
-        // 0.35 = harder early
-        float easedT = Mathf.Lerp(t * t, t, 0.4f);
-
-        float wallMaxReduction = 1.7f - 0.95f;
-        float rockMaxReduction = 1.45f - 0.25f;
-
-
-        objectSpawnerManager.SetWallSpawnRate(wallLevelDefaultSpawnRate - easedT * wallMaxReduction);
-        objectSpawnerManager.SetRockSpawnRate(rockLevelDefaultSpawnRate - easedT * rockMaxReduction);
-
-
-        //rate = defaultRate - easedT * maxReduction;
-
-        //if (currentLevel % 2 == 0) objectSpawnerManager.SetWallSpawnRate(wallLevelDefaultSpawnRate - (currentLevel - 1) * wallLevelSpawnRateMult); //1.5
-        //if (currentLevel % 2 != 0) objectSpawnerManager.SetRockSpawnRate(rockLevelDefaultSpawnRate - (currentLevel - 1) * rockLevelSpawnRateMult); //1.25
+        objectSpawnerManager.SetWallSpawnRate(wallLevelDefaultSpawnRate - t * (wallLevelDefaultSpawnRate - 0.75f));
+        objectSpawnerManager.SetRockSpawnRate(rockLevelDefaultSpawnRate - t * (rockLevelDefaultSpawnRate - 0.05f));
     }
 
     public void EndLevel(bool isOutOfFuel)
