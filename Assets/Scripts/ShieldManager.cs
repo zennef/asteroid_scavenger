@@ -48,6 +48,7 @@ public class ShieldManager : MonoBehaviour
 
     private void GameManagerScript_OnGameStart(object sender, EventArgs e)
     {
+        numberOfShields = playerController.GetMaxShieldCount();
         shield2.SetActive(false);
         shield3.SetActive(false);
     }
