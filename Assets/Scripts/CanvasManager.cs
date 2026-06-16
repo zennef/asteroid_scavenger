@@ -41,7 +41,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyCrystalValueText;
     [SerializeField] private TextMeshProUGUI keyWallValueText;
     [SerializeField] private TextMeshProUGUI keyRockValueText;
-    [SerializeField] private GameObject hideCrystalFuelCellValue;
+    [SerializeField] private GameObject showCrystalFuelCellValue;
 
     // Animation settings � tweak these in one place
     private const float SLIDE_DISTANCE = 40f;
@@ -238,7 +238,7 @@ public class CanvasManager : MonoBehaviour
         }
         else if (e.UpgradeName == "Crystal Fuel Cells")
         {
-            hideCrystalFuelCellValue.SetActive(false);
+            showCrystalFuelCellValue.SetActive(true);
             keyCrystalValueText.text = "+" + playerController.GetCrystalFuelAmount().ToString();
         }
         else if (e.UpgradeName == "Asteroid Shield")
@@ -262,7 +262,7 @@ public class CanvasManager : MonoBehaviour
         keyCrystalValueText.text = "+" + playerController.GetFuelCellAmount().ToString();
         keyWallValueText.text = "-" + playerController.GetWallImpactFuelLoss().ToString();
         keyRockValueText.text = "-" + playerController.GetRockImpactFuelLoss().ToString();
-        hideCrystalFuelCellValue.SetActive(true);
+        showCrystalFuelCellValue.SetActive(false);
         shieldLabelText.text = "ROCK SHIELDS";
         asteroidShieldImage.SetActive(false);
         fuelEfficiencyText.text = "-" + playerController.GetFuelEfficiency().ToString();
