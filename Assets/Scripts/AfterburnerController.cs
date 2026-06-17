@@ -6,9 +6,27 @@ public class AfterburnerController : MonoBehaviour
     public Vector2 targetScale = Vector2.zero;
     public float duration = 0.4f;
 
-    void Start()
+    private Vector3 originalLocalScale;
+    private Coroutine shrinkCoroutine;
+
+    void Awake()
     {
-        StartCoroutine(ShrinkOverTime(duration));
+        originalLocalScale = transform.localScale;
+    }
+
+    void OnEnable()
+    {
+        transform.localScale = originalLocalScale;
+        shrinkCoroutine = StartCoroutine(ShrinkOverTime(duration));
+    }
+
+    void OnDisable()
+    {
+        if (shrinkCoroutine != null)
+        {
+            StopCoroutine(shrinkCoroutine);
+            shrinkCoroutine = null;
+        }
     }
 
     public void SetColor(Color32 color)
@@ -30,5 +48,6 @@ public class AfterburnerController : MonoBehaviour
         }
 
         transform.localScale = targetScale; // Ensure exact final scale
+        ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }

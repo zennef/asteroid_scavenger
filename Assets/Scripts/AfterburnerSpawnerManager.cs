@@ -29,9 +29,8 @@ public class AfterburnerSpawnerManager : MonoBehaviour
 
     void SpawnAfterburner()
     {
-        GameObject afterburner = Instantiate(afterburnerPrefab, afterburnerSpawn.transform.position, Quaternion.identity);
+        GameObject afterburner = ObjectPoolManager.SpawnObject(afterburnerPrefab, afterburnerSpawn.transform.position, Quaternion.identity);
         Color32 shipColor = player.GetComponent<SpriteRenderer>().color;
         afterburner.GetComponent<AfterburnerController>().SetColor(shipColor);
-        Destroy(afterburner, 0.4f);
     }
 }
