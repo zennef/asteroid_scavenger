@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Pivot.x
@@ -1851,7 +1851,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -87}
+  m_AnchoredPosition: {x: 100, y: -87}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &119612508
@@ -16464,7 +16464,7 @@ MonoBehaviour:
   rockSpawnRate: 1.45
   fuelSpawnRate: 5
   crystalMinSpawnRate: 8
-  crystalMaxSpawnRate: 12
+  crystalMaxSpawnRate: 11
   player: {fileID: 514381696}
 --- !u!1 &503892454
 GameObject:
@@ -21239,7 +21239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHIELD RECHARGE RATE :'
+  m_text: 'SHIELD CHARGE SPEED :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19ae41770032f9242bd65c1807a50436, type: 2}
   m_sharedMaterial: {fileID: 1756480500961514540, guid: 19ae41770032f9242bd65c1807a50436, type: 2}
@@ -21655,11 +21655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_fontSize
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_fontSizeBase
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Name
@@ -21667,7 +21667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7017576375415726027, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 14
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Pivot.x
@@ -21695,11 +21695,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 21.0861
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 3.9537
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_LocalScale.x
@@ -21747,7 +21747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1128
+      value: -1060
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -31048,7 +31048,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.8374987, y: 6.5}
+  m_AnchoredPosition: {x: -5.8374987, y: -18.3}
   m_SizeDelta: {x: 60.875, y: 8.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1548569314
@@ -38244,7 +38244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90, y: -87}
+  m_AnchoredPosition: {x: -100, y: -87}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!1001 &2029738868
