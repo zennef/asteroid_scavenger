@@ -8381,7 +8381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_FloatArgument
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
@@ -9683,6 +9683,7 @@ MonoBehaviour:
   valueText: {fileID: 1840072066}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &305274024 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
@@ -10307,6 +10308,7 @@ MonoBehaviour:
   valueText: {fileID: 182542343}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &356311258
 GameObject:
   m_ObjectHideFlags: 0
@@ -10600,6 +10602,7 @@ MonoBehaviour:
   valueText: {fileID: 917568950}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &391020780
 GameObject:
   m_ObjectHideFlags: 0
@@ -11081,6 +11084,7 @@ MonoBehaviour:
   valueText: {fileID: 1123163194}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &452956144
 GameObject:
   m_ObjectHideFlags: 0
@@ -16785,17 +16789,17 @@ MonoBehaviour:
   moveDuration: 0.625
   fuelConsumptionPerSecond: 5
   moveSpeedDurationLevel: 1
-  moveSpeedDurationMaxLevel: 11
+  moveSpeedDurationMaxLevel: 10
   shieldRegenIntervalLevel: 1
-  shieldRegenIntervalMaxLevel: 11
+  shieldRegenIntervalMaxLevel: 10
   maxFuelAmountLevel: 1
-  maxFuelAmountMaxLevel: 11
+  maxFuelAmountMaxLevel: 10
   fuelCellAmountLevel: 1
-  fuelCellAmountMaxLevel: 11
+  fuelCellAmountMaxLevel: 10
   rockImpactFuelLossLevel: 1
-  rockImpactFuelLossMaxLevel: 6
+  rockImpactFuelLossMaxLevel: 10
   wallImpactFuelLossLevel: 1
-  wallImpactFuelLossMaxLevel: 6
+  wallImpactFuelLossMaxLevel: 10
   fuelConsumptionLevel: 1
   fuelConsumptionMaxLevel: 3
   isWallTrueDamageLevel: 1
@@ -18328,6 +18332,7 @@ MonoBehaviour:
   valueText: {fileID: 924326906}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &583636894
 GameObject:
   m_ObjectHideFlags: 0
@@ -22486,7 +22491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
@@ -26957,6 +26962,7 @@ MonoBehaviour:
   valueText: {fileID: 1703555718}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &1197857769
 GameObject:
   m_ObjectHideFlags: 0
@@ -28373,7 +28379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_FloatArgument
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
@@ -30379,8 +30385,8 @@ MonoBehaviour:
   objectDestroyer: {fileID: 549800816}
   shop: {fileID: 1855542328}
   canvas: {fileID: 1392392006}
-  wallLevelDefaultSpawnRate: 2
-  rockLevelDefaultSpawnRate: 1.75
+  wallLevelDefaultSpawnRate: 0.75
+  rockLevelDefaultSpawnRate: 0.5
   wallLevelSpawnRateMult: 0.05
   rockLevelSpawnRateMult: 0.1
   timeRemaining: 0
@@ -31969,7 +31975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
@@ -35053,6 +35059,7 @@ MonoBehaviour:
   valueText: {fileID: 503892456}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &1778674031
 GameObject:
   m_ObjectHideFlags: 0
@@ -35354,6 +35361,7 @@ MonoBehaviour:
   valueText: {fileID: 488443866}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 1
 --- !u!1 &1840072064
 GameObject:
   m_ObjectHideFlags: 0
@@ -36697,6 +36705,7 @@ MonoBehaviour:
   valueText: {fileID: 1111408374}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1 &1932549861
 GameObject:
   m_ObjectHideFlags: 0
@@ -39319,6 +39328,7 @@ MonoBehaviour:
   valueText: {fileID: 1023152556}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
+  isLegendary: 0
 --- !u!1001 &2081207894
 PrefabInstance:
   m_ObjectHideFlags: 0
