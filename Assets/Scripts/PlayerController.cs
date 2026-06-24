@@ -535,7 +535,7 @@ public class PlayerController : MonoBehaviour
         {
             if (crystalFuelMultiplier > 0f)
             {
-                fuelAmount += fuelCellAmount * crystalFuelMultiplier;
+                fuelAmount += GetCrystalFuelAmount();
                 if (fuelAmount > maxFuelAmount) fuelAmount = maxFuelAmount;
                 if (fuelAmount > 40f) StopBlink();
                 OnFuelChanged?.Invoke(this, new OnFuelChangedArgs { FuelAmount = fuelAmount });
@@ -744,7 +744,7 @@ public class PlayerController : MonoBehaviour
 
     public float GetCrystalFuelAmount()
     {
-        return fuelCellAmount * crystalFuelMultiplier;
+        return Mathf.Round(fuelCellAmount * crystalFuelMultiplier);
     }
 
     public float GetShieldRechargeInterval()

@@ -226,7 +226,7 @@ public class CanvasManager : MonoBehaviour
         if (e.UpgradeName == "Fuel Cell")
         {
             keyFuelValueText.text = "+" + playerController.GetFuelCellAmount().ToString();
-            keyCrystalValueText.text = "+" + playerController.GetFuelCellAmount().ToString();
+            keyCrystalValueText.text = playerController.GetCrystalFuelMultiplier() > 0 ? "+" + playerController.GetCrystalFuelAmount().ToString() : "+" + Mathf.RoundToInt(playerController.GetFuelCellAmount()).ToString();
         }
         else if (e.UpgradeName == "Wall Armor")
         {
