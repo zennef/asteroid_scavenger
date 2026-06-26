@@ -16,8 +16,12 @@ public class CameraShakeManager : MonoBehaviour
     [SerializeField] private float wallShakeStrength = 0.3f;
     [SerializeField] private int wallShakeVibrato = 25;
 
+    private Vector3 _restingPosition;
+
     void Start()
     {
+        _restingPosition = transform.position;
+
         playerController = player.GetComponent<PlayerController>();
         playerController.OnPlayerHitByRock += (s, e) => Shake(rockShakeDuration, rockShakeStrength, rockShakeVibrato);
         playerController.OnPlayerHitByWall += (s, e) => Shake(wallShakeDuration, wallShakeStrength, wallShakeVibrato);
@@ -25,7 +29,9 @@ public class CameraShakeManager : MonoBehaviour
 
     private void Shake(float duration, float strength, int vibrato)
     {
+        DOTween.Kill(transform);
+        transform.position = _restingPosition;
         transform.DOShakePosition(duration, strength, vibrato)
-                 .SetUpdate(true); // works even if timeScale = 0
+                 .SetUpdate(true);
     }
 }
