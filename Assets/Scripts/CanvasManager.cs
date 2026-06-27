@@ -442,7 +442,7 @@ public class CanvasManager : MonoBehaviour
             Transform spawnPos = upgradeSpawnPositions[i];
             GameObject upgradeToInstantiate;
 
-            if (UnityEngine.Random.Range(0, 7) == 0 && shuffledLegendaryUpgrades.Length > i)
+            if (UnityEngine.Random.Range(0, 4) == 0 && shuffledLegendaryUpgrades.Length > i)
             {
                 upgradeToInstantiate = shuffledLegendaryUpgrades[i];
             }
