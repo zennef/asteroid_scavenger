@@ -32045,7 +32045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 694552191965256631, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3014607374927691225, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_text
