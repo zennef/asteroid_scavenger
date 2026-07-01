@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject canvas;
     [SerializeField] private float wallLevelDefaultSpawnRate;
     [SerializeField] private float rockLevelDefaultSpawnRate;
-    [SerializeField] private float wallLevelSpawnRateMult;
-    [SerializeField] private float rockLevelSpawnRateMult;
+    [SerializeField] private float wallLevelFinalSpawnRate = 0.864f;
+    [SerializeField] private float rockLevelFinalSpawnRate = 0.205f;
     private PlayerController playerController;
     private ObjectSpawnerManager objectSpawnerManager;
     private ObjectDestroyerManager objectDestroyerManager;
@@ -99,10 +99,19 @@ public class GameManager : MonoBehaviour
 
     private void IncreaseObstacleSpawnRate()
     {
-        float t = (currentLevel - 1) / 11f;
+        int levelIndex = currentLevel - 1;
 
-        objectSpawnerManager.SetWallSpawnRate(wallLevelDefaultSpawnRate - t * (wallLevelDefaultSpawnRate - 0.75f));
-        objectSpawnerManager.SetRockSpawnRate(rockLevelDefaultSpawnRate - t * (rockLevelDefaultSpawnRate - 0.05f));
+        float wallRateStart = 1f / wallLevelDefaultSpawnRate;
+        float wallRateEnd = 1f / wallLevelFinalSpawnRate;
+        float wallRatio = Mathf.Pow(wallRateEnd / wallRateStart, 1f / 11f);
+        float wallRate = wallRateStart * Mathf.Pow(wallRatio, levelIndex);
+        objectSpawnerManager.SetWallSpawnRate(1f / wallRate);
+
+        float rockRateStart = 1f / rockLevelDefaultSpawnRate;
+        float rockRateEnd = 1f / rockLevelFinalSpawnRate;
+        float rockRatio = Mathf.Pow(rockRateEnd / rockRateStart, 1f / 11f);
+        float rockRate = rockRateStart * Mathf.Pow(rockRatio, levelIndex);
+        objectSpawnerManager.SetRockSpawnRate(1f / rockRate);
     }
 
     public void EndLevel(bool isOutOfFuel)

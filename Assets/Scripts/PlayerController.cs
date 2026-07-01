@@ -209,10 +209,12 @@ public class PlayerController : MonoBehaviour
     {
         if (fuelAmount <= 40f) return;
 
-        if (e.ShieldCount > 0)
-            spriteRenderer.color = new Color32(0x00, 0x8C, 0xFF, 0xFF);
-        else
-            spriteRenderer.color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+        spriteRenderer.color = GetShieldRestingColor();
+    }
+
+    private Color32 GetShieldRestingColor()
+    {
+        return shieldCount > 0 ? ColorPalette.Blue : ColorPalette.White;
     }
 
     public void StartLevel()
@@ -404,9 +406,7 @@ public class PlayerController : MonoBehaviour
             _blinkCoroutine = null;
         }
         spriteRenderer.DOKill();
-        spriteRenderer.color = shieldCount > 0
-            ? new Color32(0x00, 0x8C, 0xFF, 0xFF)
-            : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+        spriteRenderer.color = GetShieldRestingColor();
     }
 
     private IEnumerator FlashTwiceRoutine(Color32 color)
@@ -416,11 +416,14 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.DOKill();
             spriteRenderer.DOColor(color, 0.08f);
             yield return new WaitForSeconds(0.08f);
-            Color32 restingColor = shieldCount > 0 ? ColorPalette.Blue : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+            Color32 restingColor = GetShieldRestingColor();
             spriteRenderer.DOKill();
             spriteRenderer.DOColor(restingColor, 0.08f);
             yield return new WaitForSeconds(0.08f);
         }
+
+        spriteRenderer.DOKill();
+        spriteRenderer.color = GetShieldRestingColor();
     }
 
     private void TriggerFlash(Color32 color)
