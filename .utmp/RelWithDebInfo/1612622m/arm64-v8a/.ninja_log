@@ -1,23 +1,23 @@
 # ninja log v5
-12	7834	8043165267293012	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	bec13f24590628bb
-117	718	8043165196180541	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	ba2de569980b5844
-719	947	8043165198284936	C:/Users/mikeg/Unity Projects/Shmup/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1612622m/obj/arm64-v8a/libswappywrapper.so	6a93f5369ee9f275
-72	7702	8043165266029543	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	d0d1648bf7c04e08
-80	7249	8043165261459924	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ab5e6017f454acb6
-40	7295	8043165261908380	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	2c1c99d351937043
-104	7502	8043165264001460	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	7b871b3826a4155d
-27	7320	8043165262105727	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	76e4b280a22fa3ce
-49	7405	8043165262974130	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c5e0f9819642f3e4
-91	7330	8043165262254680	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9ec72f306d2c19b
-7834	7958	8043165268603236	C:/Users/mikeg/Unity Projects/Shmup/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1612622m/obj/arm64-v8a/libgame.so	f471a6e47694249
+18	3353	8046458666716645	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	bec13f24590628bb
 97	617	8046458639389126	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	ba2de569980b5844
 619	1081	8046458643432172	C:/Users/mikeg/Unity Projects/Shmup/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1612622m/obj/arm64-v8a/libswappywrapper.so	6a93f5369ee9f275
+84	3189	8046458665109065	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	d0d1648bf7c04e08
 50	2766	8046458660825938	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ab5e6017f454acb6
 42	2783	8046458661022086	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	2c1c99d351937043
 26	2800	8046458661197875	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	76e4b280a22fa3ce
-60	2810	8046458661280097	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9ec72f306d2c19b
-34	2900	8046458662209471	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c5e0f9819642f3e4
-84	3189	8046458665109065	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	d0d1648bf7c04e08
 72	3328	8046458666521698	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	7b871b3826a4155d
-18	3353	8046458666716645	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	bec13f24590628bb
+34	2900	8046458662209471	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c5e0f9819642f3e4
+60	2810	8046458661280097	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9ec72f306d2c19b
 3353	3487	8046458668111186	C:/Users/mikeg/Unity Projects/Shmup/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1612622m/obj/arm64-v8a/libgame.so	f471a6e47694249
+100	621	8051690609790268	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	ba2de569980b5844
+622	1048	8051690613690763	C:/Users/mikeg/Unity Projects/Shmup/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1612622m/obj/arm64-v8a/libswappywrapper.so	6a93f5369ee9f275
+87	2736	8051690630894580	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ab5e6017f454acb6
+43	2753	8051690631069580	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	2c1c99d351937043
+35	2786	8051690631405963	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	76e4b280a22fa3ce
+53	2810	8051690631661920	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9ec72f306d2c19b
+27	2878	8051690632345192	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c5e0f9819642f3e4
+64	3157	8051690635165530	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	d0d1648bf7c04e08
+18	3286	8051690636466553	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	bec13f24590628bb
+75	3305	8051690636631588	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	7b871b3826a4155d
+3305	3437	8051690637996037	C:/Users/mikeg/Unity Projects/Shmup/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1612622m/obj/arm64-v8a/libgame.so	f471a6e47694249

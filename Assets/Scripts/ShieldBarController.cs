@@ -9,6 +9,7 @@ public class ShieldBarController : MonoBehaviour
     private float rechargeDuration;
     public bool isOnline = true;
     public bool isGamePaused = false;
+    public bool isFrozen = false;
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class ShieldBarController : MonoBehaviour
     void Update()
     {
 
-        if (!isGamePaused && slider.value < slider.maxValue)
+        if (!isGamePaused && !isFrozen && slider.value < slider.maxValue)
         {
             isOnline = false;
             float ratePerSecond = slider.maxValue / rechargeDuration;
@@ -34,7 +35,7 @@ public class ShieldBarController : MonoBehaviour
                 slider.maxValue
             );
 
-        } 
+        }
         else
         {
             isOnline = true;
@@ -51,6 +52,11 @@ public class ShieldBarController : MonoBehaviour
     {
         isGamePaused = !isGamePaused;
 
+    }
+
+    public void SetFrozen(bool frozen)
+    {
+        isFrozen = frozen;
     }
 
     public void SetMaxShield(int maxValue)

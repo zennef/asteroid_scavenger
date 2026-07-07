@@ -207,14 +207,19 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerController_OnShieldChanged(object sender, OnShieldChangedEventArgs e)
     {
-        if (fuelAmount <= 40f) return;
-
-        spriteRenderer.color = GetShieldRestingColor();
+        RefreshShipColor();
     }
 
     private Color32 GetShieldRestingColor()
     {
         return shieldCount > 0 ? ColorPalette.Blue : ColorPalette.White;
+    }
+
+    private void RefreshShipColor()
+    {
+        if (_isBlinking) return;
+        spriteRenderer.DOKill();
+        spriteRenderer.color = GetShieldRestingColor();
     }
 
     public void StartLevel()
@@ -405,8 +410,7 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(_blinkCoroutine);
             _blinkCoroutine = null;
         }
-        spriteRenderer.DOKill();
-        spriteRenderer.color = GetShieldRestingColor();
+        RefreshShipColor();
     }
 
     private IEnumerator FlashTwiceRoutine(Color32 color)
@@ -422,8 +426,8 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.08f);
         }
 
-        spriteRenderer.DOKill();
-        spriteRenderer.color = GetShieldRestingColor();
+        RefreshShipColor();
+        _flashCoroutine = null;
     }
 
     private void TriggerFlash(Color32 color)

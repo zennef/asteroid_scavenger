@@ -14,13 +14,13 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        masterSlider.value = Mathf.RoundToInt(PlayerPrefs.GetFloat("MasterVolume", 0.5f) * 10f);
+        musicSlider.value = Mathf.RoundToInt(PlayerPrefs.GetFloat("MusicVolume", 0.5f) * 10f);
+        sfxSlider.value = Mathf.RoundToInt(PlayerPrefs.GetFloat("SFXVolume", 1f) * 10f);
 
-        AudioManager.Instance.SetMasterVolume(masterSlider.value);
-        AudioManager.Instance.SetMusicVolume(musicSlider.value);
-        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
+        AudioManager.Instance.SetMasterVolume(masterSlider.value / 10f);
+        AudioManager.Instance.SetMusicVolume(musicSlider.value / 10f);
+        AudioManager.Instance.SetSFXVolume(sfxSlider.value / 10f);
 
         UpdateAllText();
 
@@ -31,22 +31,25 @@ public class SettingsManager : MonoBehaviour
 
     private void OnMasterChanged(float value)
     {
-        AudioManager.Instance.SetMasterVolume(value);
-        PlayerPrefs.SetFloat("MasterVolume", value);
+        float volume = value / 10f;
+        AudioManager.Instance.SetMasterVolume(volume);
+        PlayerPrefs.SetFloat("MasterVolume", volume);
         SetValueText(masterValueText, value);
     }
 
     private void OnMusicChanged(float value)
     {
-        AudioManager.Instance.SetMusicVolume(value);
-        PlayerPrefs.SetFloat("MusicVolume", value);
+        float volume = value / 10f;
+        AudioManager.Instance.SetMusicVolume(volume);
+        PlayerPrefs.SetFloat("MusicVolume", volume);
         SetValueText(musicValueText, value);
     }
 
     private void OnSFXChanged(float value)
     {
-        AudioManager.Instance.SetSFXVolume(value);
-        PlayerPrefs.SetFloat("SFXVolume", value);
+        float volume = value / 10f;
+        AudioManager.Instance.SetSFXVolume(volume);
+        PlayerPrefs.SetFloat("SFXVolume", volume);
         SetValueText(sfxValueText, value);
     }
 
@@ -59,7 +62,7 @@ public class SettingsManager : MonoBehaviour
 
     private void SetValueText(TextMeshProUGUI text, float value)
     {
-        text.text = Mathf.RoundToInt(value * 100f) + "%";
+        text.text = Mathf.RoundToInt(value * 10f) + "%";
     }
 
     private void OnDestroy()

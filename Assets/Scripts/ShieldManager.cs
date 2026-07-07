@@ -43,7 +43,8 @@ public class ShieldManager : MonoBehaviour
         gameManagerScript = gameManager.GetComponent<GameManager>();
         gameManagerScript.OnGameOver += GameManagerScript_OnGameOver;
         gameManagerScript.OnGameStart += GameManagerScript_OnGameStart;
-        gameManagerScript.OnLevelEnded += GameManagerScript_OnLevelEnded;
+        gameManagerScript.OnLevelStarted += GameManagerScript_OnLevelStarted;
+        gameManagerScript.OnYouWin += GameManagerScript_OnYouWin;
     }
 
     private void GameManagerScript_OnGameStart(object sender, EventArgs e)
@@ -51,23 +52,35 @@ public class ShieldManager : MonoBehaviour
         numberOfShields = playerController.GetMaxShieldCount();
         shield2.SetActive(false);
         shield3.SetActive(false);
+        for (int i = 0; i < shields.Length; i++)
+        {
+            shields[i].SetFrozen(false);
+            shields[i].SetShield(100);
+        }
     }
 
-    private void GameManagerScript_OnLevelEnded(object sender, EventArgs e)
+    private void GameManagerScript_OnLevelStarted(object sender, EventArgs e)
     {
-        ResetShields();
+        for (int i = 0; i < numberOfShields; i++)
+        {
+            shields[i].SetFrozen(false);
+            shields[i].SetShield(100);
+        }
     }
 
     private void GameManagerScript_OnGameOver(object sender, EventArgs e)
     {
-        ResetShields();
+        for (int i = 0; i < numberOfShields; i++)
+        {
+            shields[i].SetFrozen(true);
+        }
     }
 
-    private void ResetShields()
+    private void GameManagerScript_OnYouWin(object sender, EventArgs e)
     {
         for (int i = 0; i < numberOfShields; i++)
         {
-            shields[i].SetShield(100);
+            shields[i].SetFrozen(true);
         }
     }
 
