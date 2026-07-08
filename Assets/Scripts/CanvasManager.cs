@@ -69,6 +69,11 @@ public class CanvasManager : MonoBehaviour
         playerController.OnUpgradePurchased += PlayerController_OnUpgradePurchased;
         playerController.OnGamePaused += PlayerController_OnGamePaused;
 
+        foreach (StatDisplayController statDisplay in playerStats.GetComponentsInChildren<StatDisplayController>(true))
+        {
+            statDisplay.Initialize();
+        }
+
         // Initialize panel states without animation on start
         menuBackground.SetActive(true);
         EnsureCanvasGroup(menuBackground);
@@ -217,7 +222,6 @@ public class CanvasManager : MonoBehaviour
     {
         ResetHUDKeyValues();
         ResetAvailableUpgradeLists();
-        ShowPanelInstant(playerStats);
         HidePanel(playerStats, new Vector2(0, -SLIDE_DISTANCE));
     }
 

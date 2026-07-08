@@ -14,7 +14,7 @@ public class StatDisplayController : MonoBehaviour
 
 
 
-    void Start()
+    public void Initialize()
     {
         playerController = player.GetComponent<PlayerController>();
         maxDisplayLevel = playerController.GetUpgradeMaxDisplayLevel(upgradeName);
