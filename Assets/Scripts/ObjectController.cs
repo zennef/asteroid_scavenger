@@ -36,12 +36,9 @@ public class ObjectController : MonoBehaviour
             var seq = DOTween.Sequence()
                 .AppendInterval(interval)
                 .Append(spriteRenderer.DOColor(Color.white, 0.05f))
+                .Append(spriteRenderer.DOColor(restingColor, 0.05f))
+                .Append(spriteRenderer.DOColor(Color.white, 0.05f))
                 .Append(spriteRenderer.DOColor(restingColor, 0.05f));
-            if (gameObject.CompareTag("Crystal"))
-            {
-                seq.Append(spriteRenderer.DOColor(Color.white, 0.05f))
-                   .Append(spriteRenderer.DOColor(restingColor, 0.05f));
-            }
             seq.SetLoops(-1, LoopType.Restart)
                .SetUpdate(true)
                .SetAutoKill(false)

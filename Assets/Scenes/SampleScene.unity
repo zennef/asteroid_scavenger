@@ -32160,7 +32160,7 @@ MonoBehaviour:
   - {fileID: 273507847}
   gameManager: {fileID: 1433211763}
   flashColor: {r: 0, g: 0.11034157, b: 0.41509432, a: 0.39215687}
-  flashDuration: 0.15
+  flashDuration: 1
 --- !u!1 &1526589331
 GameObject:
   m_ObjectHideFlags: 0
