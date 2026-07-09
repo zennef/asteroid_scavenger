@@ -52,7 +52,7 @@ public class FuelBarController : MonoBehaviour
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if (e.UpgradeName == "Fuel Capacity")
+        if (e.UpgradeType == UpgradeType.FuelCapacity)
         {
             int newMaxFuel = 100 + (e.UpgradeLevel * 5);
             SetMaxFuel(newMaxFuel);

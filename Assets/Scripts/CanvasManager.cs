@@ -43,7 +43,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyRockValueText;
     [SerializeField] private GameObject showCrystalFuelCellValue;
 
-    // Animation settings � tweak these in one place
+    // Animation settings - tweak these in one place
     private const float SLIDE_DISTANCE = 40f;
     private const float SLIDE_DURATION = 0.3f;
     private const float FADE_DURATION = 0.2f;
@@ -227,34 +227,34 @@ public class CanvasManager : MonoBehaviour
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if (e.UpgradeName == "Fuel Cell")
+        if (e.UpgradeType == UpgradeType.FuelCell)
         {
             keyFuelValueText.text = "+" + playerController.GetFuelCellAmount().ToString();
             keyCrystalValueText.text = playerController.GetCrystalFuelMultiplier() > 0 ? "+" + playerController.GetCrystalFuelAmount().ToString() : "+" + Mathf.RoundToInt(playerController.GetFuelCellAmount()).ToString();
         }
-        else if (e.UpgradeName == "Wall Armor")
+        else if (e.UpgradeType == UpgradeType.WallArmor)
         {
             keyWallValueText.text = "-" + playerController.GetWallImpactFuelLoss().ToString();
         }
-        else if (e.UpgradeName == "Rock Armor")
+        else if (e.UpgradeType == UpgradeType.RockArmor)
         {
             keyRockValueText.text = "-" + playerController.GetRockImpactFuelLoss().ToString();
         }
-        else if (e.UpgradeName == "Crystal Fuel Cells")
+        else if (e.UpgradeType == UpgradeType.CrystalFuelCells)
         {
             showCrystalFuelCellValue.SetActive(true);
             keyCrystalValueText.text = "+" + playerController.GetCrystalFuelAmount().ToString();
         }
-        else if (e.UpgradeName == "Asteroid Shield")
+        else if (e.UpgradeType == UpgradeType.AsteroidShield)
         {
             shieldLabelText.text = "ASTEROID SHIELDS";
             asteroidShieldImage.SetActive(true);
         }
-        else if (e.UpgradeName == "Fuel Efficiency")
+        else if (e.UpgradeType == UpgradeType.FuelEfficiency)
         {
             fuelEfficiencyText.text = "-" + playerController.GetFuelEfficiency().ToString();
         }
-        else if (e.UpgradeName == "Fuel Capacity")
+        else if (e.UpgradeType == UpgradeType.FuelCapacity)
         {
             maxFuelCapacityText.text = playerController.GetMaxFuelAmount().ToString();
         }

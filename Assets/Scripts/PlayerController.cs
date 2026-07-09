@@ -93,13 +93,13 @@ public class PlayerController : MonoBehaviour
     {
         public bool IsLegendary;
         public int UpgradeIndex;
-        public string UpgradeName;
+        public UpgradeType UpgradeType;
     }
 
     public event EventHandler<OnUpgradePurchasedArgs> OnUpgradePurchased;
     public class OnUpgradePurchasedArgs : EventArgs
     {
-        public string UpgradeName;
+        public UpgradeType UpgradeType;
         public int UpgradeLevel;
     }
 
@@ -563,10 +563,10 @@ public class PlayerController : MonoBehaviour
         moveSpeedDurationLevel++;
         if (moveSpeedDurationLevel >= moveSpeedDurationMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 0, UpgradeName = "Dodge Speed" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 0, UpgradeType = UpgradeType.DodgeSpeed });
         }
         moveDuration -= seconds;
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Dodge Speed", UpgradeLevel = moveSpeedDurationLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.DodgeSpeed, UpgradeLevel = moveSpeedDurationLevel });
     }
 
     public void IncreaseShieldRechargeRate(float seconds)
@@ -574,10 +574,10 @@ public class PlayerController : MonoBehaviour
         shieldRegenIntervalLevel++;
         if (shieldRegenIntervalLevel >= shieldRegenIntervalMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 1, UpgradeName = "Shield Recharge Rate" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 1, UpgradeType = UpgradeType.ShieldRechargeRate });
         }
         shieldRegenInterval -= seconds;
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Shield Recharge Rate", UpgradeLevel = shieldRegenIntervalLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.ShieldRechargeRate, UpgradeLevel = shieldRegenIntervalLevel });
     }
 
     public void IncreaseFuelCapacity(float amt)
@@ -585,10 +585,10 @@ public class PlayerController : MonoBehaviour
         maxFuelAmountLevel++;
         if (maxFuelAmountLevel >= maxFuelAmountMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 2, UpgradeName = "Fuel Capacity" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 2, UpgradeType = UpgradeType.FuelCapacity });
         }
         maxFuelAmount += amt;
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Fuel Capacity", UpgradeLevel = maxFuelAmountLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.FuelCapacity, UpgradeLevel = maxFuelAmountLevel });
     }
 
     public void IncreaseFuelCellAmount(float amt)
@@ -596,10 +596,10 @@ public class PlayerController : MonoBehaviour
         fuelCellAmountLevel++;
         if (fuelCellAmountLevel >= fuelCellAmountMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 3, UpgradeName = "Fuel Cell" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 3, UpgradeType = UpgradeType.FuelCell });
         }
         fuelCellAmount += amt;
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Fuel Cell", UpgradeLevel = fuelCellAmountLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.FuelCell, UpgradeLevel = fuelCellAmountLevel });
     }
 
     public void DecreaseRockImpactFuelLoss(float amt)
@@ -607,14 +607,14 @@ public class PlayerController : MonoBehaviour
         rockImpactFuelLossLevel++;
         if (rockImpactFuelLossLevel >= rockImpactFuelLossMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 4, UpgradeName = "Rock Armor" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 4, UpgradeType = UpgradeType.RockArmor });
         }
         rockImpactFuelLoss -= amt;
         if (rockImpactFuelLoss < 0f)
         {
             rockImpactFuelLoss = 0f;
         }
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Rock Armor", UpgradeLevel = rockImpactFuelLossLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.RockArmor, UpgradeLevel = rockImpactFuelLossLevel });
     }
 
     public void DecreaseWallImpactFuelLoss(float amt)
@@ -622,14 +622,14 @@ public class PlayerController : MonoBehaviour
         wallImpactFuelLossLevel++;
         if (wallImpactFuelLossLevel >= wallImpactFuelLossMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 5, UpgradeName = "Wall Armor" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = false, UpgradeIndex = 5, UpgradeType = UpgradeType.WallArmor });
         }
         wallImpactFuelLoss -= amt;
         if (wallImpactFuelLoss < 0f)
         {
             wallImpactFuelLoss = 0f;
         }
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Wall Armor", UpgradeLevel = wallImpactFuelLossLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.WallArmor, UpgradeLevel = wallImpactFuelLossLevel });
     }
 
     public void DecreaseFuelConsumption(float amt)
@@ -637,7 +637,7 @@ public class PlayerController : MonoBehaviour
         fuelConsumptionLevel++;
         if (fuelConsumptionLevel >= fuelConsumptionMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 0, UpgradeName = "Fuel Efficiency" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 0, UpgradeType = UpgradeType.FuelEfficiency });
         }
 
         fuelConsumptionPerSecond -= amt;
@@ -645,7 +645,7 @@ public class PlayerController : MonoBehaviour
         {
             fuelConsumptionPerSecond = 0f;
         }
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Fuel Efficiency", UpgradeLevel = fuelConsumptionLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.FuelEfficiency, UpgradeLevel = fuelConsumptionLevel });
     }
 
     public void UpgradeShields()
@@ -653,11 +653,11 @@ public class PlayerController : MonoBehaviour
         isWallTrueDamageLevel++;
         if (isWallTrueDamageLevel >= isWallTrueDamageMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 1, UpgradeName = "Asteroid Shield" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 1, UpgradeType = UpgradeType.AsteroidShield });
         }
 
         isWallTrueDamage = false;
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Asteroid Shield", UpgradeLevel = isWallTrueDamageLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.AsteroidShield, UpgradeLevel = isWallTrueDamageLevel });
     }
 
     public void IncreaseMaxShieldCount()
@@ -665,13 +665,13 @@ public class PlayerController : MonoBehaviour
         maxShieldCountLevel++;
         if (maxShieldCountLevel >= maxShieldCountMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 2, UpgradeName = "Shield Charges" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 2, UpgradeType = UpgradeType.ShieldCharges });
         }
 
         maxShieldCount++;
         shieldCount++;
         OnShieldChanged?.Invoke(this, new OnShieldChangedEventArgs { ShieldCount = shieldCount });
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Shield Charges", UpgradeLevel = maxShieldCountLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.ShieldCharges, UpgradeLevel = maxShieldCountLevel });
     }
 
     public void SetCrystalAsFuelCell()
@@ -679,10 +679,10 @@ public class PlayerController : MonoBehaviour
         isCrystalAFuelCellLevel++;
         if (isCrystalAFuelCellLevel >= isCrystalAFuelCellMaxLevel)
         {
-            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 3, UpgradeName = "Crystal Fuel Cells" });
+            OnUpgradeMaxedOut?.Invoke(this, new OnUpgradeMaxedOutArgs { IsLegendary = true, UpgradeIndex = 3, UpgradeType = UpgradeType.CrystalFuelCells });
         }
         crystalFuelMultiplier = isCrystalAFuelCellLevel == 2 ? 0.5f : 1.0f;
-        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeName = "Crystal Fuel Cells", UpgradeLevel = isCrystalAFuelCellLevel });
+        OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.CrystalFuelCells, UpgradeLevel = isCrystalAFuelCellLevel });
     }
 
     public int GetCrystalCount()
@@ -755,20 +755,20 @@ public class PlayerController : MonoBehaviour
         return Mathf.Round(fuelCellAmount * crystalFuelMultiplier);
     }
 
-    public int GetUpgradeMaxDisplayLevel(string upgradeName)
+    public int GetUpgradeMaxDisplayLevel(UpgradeType upgradeType)
     {
-        switch (upgradeName)
+        switch (upgradeType)
         {
-            case "Dodge Speed": return moveSpeedDurationMaxLevel - 1;
-            case "Shield Recharge Rate": return shieldRegenIntervalMaxLevel - 1;
-            case "Fuel Capacity": return maxFuelAmountMaxLevel - 1;
-            case "Fuel Cell": return fuelCellAmountMaxLevel - 1;
-            case "Rock Armor": return rockImpactFuelLossMaxLevel - 1;
-            case "Wall Armor": return wallImpactFuelLossMaxLevel - 1;
-            case "Fuel Efficiency": return fuelConsumptionMaxLevel - 1;
-            case "Asteroid Shield": return isWallTrueDamageMaxLevel - 1;
-            case "Shield Charges": return maxShieldCountMaxLevel - 1;
-            case "Crystal Fuel Cells": return isCrystalAFuelCellMaxLevel - 1;
+            case UpgradeType.DodgeSpeed: return moveSpeedDurationMaxLevel - 1;
+            case UpgradeType.ShieldRechargeRate: return shieldRegenIntervalMaxLevel - 1;
+            case UpgradeType.FuelCapacity: return maxFuelAmountMaxLevel - 1;
+            case UpgradeType.FuelCell: return fuelCellAmountMaxLevel - 1;
+            case UpgradeType.RockArmor: return rockImpactFuelLossMaxLevel - 1;
+            case UpgradeType.WallArmor: return wallImpactFuelLossMaxLevel - 1;
+            case UpgradeType.FuelEfficiency: return fuelConsumptionMaxLevel - 1;
+            case UpgradeType.AsteroidShield: return isWallTrueDamageMaxLevel - 1;
+            case UpgradeType.ShieldCharges: return maxShieldCountMaxLevel - 1;
+            case UpgradeType.CrystalFuelCells: return isCrystalAFuelCellMaxLevel - 1;
             default: return 0;
         }
     }

@@ -155,7 +155,6 @@ public class GameManager : MonoBehaviour
 
     private void PlayerController_OnFuelDepleted(object sender, System.EventArgs e)
     {
-        Debug.Log("Fuel depleted, ending level.");
         EndLevel(true);
     }
 

@@ -48,7 +48,7 @@ public class ShieldBarController : MonoBehaviour
     }
 
 
-    public void togglePause()
+    public void TogglePause()
     {
         isGamePaused = !isGamePaused;
 

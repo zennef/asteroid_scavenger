@@ -88,13 +88,13 @@ public class ShieldManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfShields; i++)
         {
-            shields[i].togglePause();
+            shields[i].TogglePause();
         }
     }
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if (e.UpgradeName == "Shield Charges")
+        if (e.UpgradeType == UpgradeType.ShieldCharges)
         {
             numberOfShields++;
             if (numberOfShields == 2)
@@ -108,7 +108,7 @@ public class ShieldManager : MonoBehaviour
                 shieldBarController3.SetRechargeDuration(playerController.GetShieldRechargeInterval());
             }
         }
-        else if(e.UpgradeName == "Shield Recharge Rate")
+        else if(e.UpgradeType == UpgradeType.ShieldRechargeRate)
         {
             float newRate = playerController.GetShieldRechargeInterval();
             for (int i = 0; i < numberOfShields; i++)

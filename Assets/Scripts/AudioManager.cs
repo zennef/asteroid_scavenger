@@ -235,7 +235,7 @@ public class AudioManager : MonoBehaviour
 
     private void Handle_UpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if (e.UpgradeName == "Shield Charges")
+        if (e.UpgradeType == UpgradeType.ShieldCharges)
             _shieldUpgradeJustPurchased = true;
         PlaySFX(sfxUpgradePurchased);
     }
@@ -247,7 +247,6 @@ public class AudioManager : MonoBehaviour
 
     private void Handle_GameStart(object sender, EventArgs e)
     {
-        Debug.Log("AudioManager: Handle_GameStart fired");
         lowFuelWarningSent = false;
         previousShieldCount = -1;
         ShufflePlaylists();
@@ -311,7 +310,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip clip, bool forceRestart = false)
     {
-        Debug.Log($"AudioManager: PlayMusic called with clip: {clip?.name}, forceRestart: {forceRestart}");
         if (clip == null) return;
         if (!forceRestart && musicSource.clip == clip && musicSource.isPlaying) return;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ConfirmationButtonController : MonoBehaviour
 {
-    [SerializeField] private string upgradeName;
+    [SerializeField] private UpgradeType upgradeType;
     [SerializeField] private GameObject player;
     [SerializeField] private int cost;
     [SerializeField] private GameObject upgradePrefab;
@@ -42,7 +42,7 @@ public class ConfirmationButtonController : MonoBehaviour
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if (e.UpgradeName == upgradeName)
+        if (e.UpgradeType == upgradeType)
         {
             _isPurchased = true;
             button.interactable = false;

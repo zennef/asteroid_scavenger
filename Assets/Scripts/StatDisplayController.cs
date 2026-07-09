@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatDisplayController : MonoBehaviour
 {
-    [SerializeField] private string upgradeName;
+    [SerializeField] private UpgradeType upgradeType;
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject gameManager;
@@ -17,7 +17,7 @@ public class StatDisplayController : MonoBehaviour
     public void Initialize()
     {
         playerController = player.GetComponent<PlayerController>();
-        maxDisplayLevel = playerController.GetUpgradeMaxDisplayLevel(upgradeName);
+        maxDisplayLevel = playerController.GetUpgradeMaxDisplayLevel(upgradeType);
         valueText.text = "0 / " + maxDisplayLevel;
         playerController.OnUpgradePurchased += PlayerController_OnUpgradePurchased;
         playerController.OnUpgradeMaxedOut += PlayerController_OnUpgradeMaxedOut;
@@ -33,7 +33,7 @@ public class StatDisplayController : MonoBehaviour
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
     {
-        if (e.UpgradeName == upgradeName)
+        if (e.UpgradeType == upgradeType)
         {
             valueText.text = (e.UpgradeLevel - 1) + " / " + maxDisplayLevel;
         }
@@ -41,7 +41,7 @@ public class StatDisplayController : MonoBehaviour
 
     private void PlayerController_OnUpgradeMaxedOut(object sender, PlayerController.OnUpgradeMaxedOutArgs e)
     {
-        if (e.UpgradeName == upgradeName)
+        if (e.UpgradeType == upgradeType)
         {
             valueText.text = "MAXED";
         }

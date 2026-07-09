@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Shield Charges
+  upgradeType: 8
   player: {fileID: 514381696}
   cost: 4
   upgradePrefab: {fileID: 0}
@@ -9925,7 +9925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Fuel Efficiency
+  upgradeType: 6
   valueText: {fileID: 1840072066}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -10432,7 +10432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Shield Recharge Rate
+  upgradeType: 1
   player: {fileID: 514381696}
   cost: 2
   upgradePrefab: {fileID: 0}
@@ -10560,7 +10560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Asteroid Shield
+  upgradeType: 7
   valueText: {fileID: 182542343}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -10853,7 +10853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Fuel Capacity
+  upgradeType: 2
   valueText: {fileID: 917568950}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -11334,7 +11334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Dodge Speed
+  upgradeType: 0
   valueText: {fileID: 1123163194}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -18771,7 +18771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Fuel Cell
+  upgradeType: 3
   valueText: {fileID: 924326906}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -20503,7 +20503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Asteroid Shield
+  upgradeType: 7
   player: {fileID: 514381696}
   cost: 4
   upgradePrefab: {fileID: 0}
@@ -22480,7 +22480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Fuel Efficiency
+  upgradeType: 6
   player: {fileID: 514381696}
   cost: 4
   upgradePrefab: {fileID: 0}
@@ -24766,7 +24766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Fuel Capacity
+  upgradeType: 2
   player: {fileID: 514381696}
   cost: 2
   upgradePrefab: {fileID: 0}
@@ -26718,7 +26718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Crystal Fuel Cells
+  upgradeType: 9
   player: {fileID: 514381696}
   cost: 4
   upgradePrefab: {fileID: 0}
@@ -27585,7 +27585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Fuel Cell
+  upgradeType: 3
   player: {fileID: 514381696}
   cost: 2
   upgradePrefab: {fileID: 0}
@@ -27641,7 +27641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Shield Charges
+  upgradeType: 8
   valueText: {fileID: 1703555718}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -30428,7 +30428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Rock Armor
+  upgradeType: 4
   player: {fileID: 514381696}
   cost: 2
   upgradePrefab: {fileID: 0}
@@ -32976,7 +32976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Wall Armor
+  upgradeType: 5
   player: {fileID: 514381696}
   cost: 2
   upgradePrefab: {fileID: 0}
@@ -36619,7 +36619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Shield Recharge Rate
+  upgradeType: 1
   valueText: {fileID: 503892456}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -36920,7 +36920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Crystal Fuel Cells
+  upgradeType: 9
   valueText: {fileID: 488443866}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -38338,7 +38338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Rock Armor
+  upgradeType: 4
   valueText: {fileID: 1111408374}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
@@ -39526,7 +39526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f082db5b92cd342bb55904876ad47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfirmationButtonController
-  upgradeName: Dodge Speed
+  upgradeType: 0
   player: {fileID: 514381696}
   cost: 2
   upgradePrefab: {fileID: 0}
@@ -41052,7 +41052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca49e357a44264d9fd5b9556db6c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatDisplayController
-  upgradeName: Wall Armor
+  upgradeType: 5
   valueText: {fileID: 1023152556}
   player: {fileID: 514381696}
   gameManager: {fileID: 1433211763}
