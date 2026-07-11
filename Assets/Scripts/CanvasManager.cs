@@ -42,6 +42,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyWallValueText;
     [SerializeField] private TextMeshProUGUI keyRockValueText;
     [SerializeField] private GameObject showCrystalFuelCellValue;
+    [SerializeField] private GameObject howToPlayPanel;
 
     // Animation settings - tweak these in one place
     private const float SLIDE_DISTANCE = 40f;
@@ -89,6 +90,9 @@ public class CanvasManager : MonoBehaviour
 
         pauseMenu.SetActive(false);
         EnsureCanvasGroup(pauseMenu);
+
+        howToPlayPanel.SetActive(false);
+        EnsureCanvasGroup(howToPlayPanel);
 
         EnsureCanvasGroup(levelComplete);
     }
@@ -353,6 +357,16 @@ public class CanvasManager : MonoBehaviour
         ShowPanel(shop, new Vector2(0, -SLIDE_DISTANCE));
         ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE), delay: 0.05f);
         SpawnRandomUpgrades();
+    }
+
+    public void ShowHowToPlay()
+    {
+        ShowPanel(howToPlayPanel, new Vector2(0, -SLIDE_DISTANCE));
+    }
+
+    public void HideHowToPlay()
+    {
+        HidePanel(howToPlayPanel, new Vector2(0, -SLIDE_DISTANCE));
     }
 
     public void OpenSpecialShop()
