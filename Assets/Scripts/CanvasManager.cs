@@ -19,6 +19,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI youWinText;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject levelComplete;
+    [SerializeField] private LevelCompleteStatsController levelCompleteStatsController;
     [SerializeField] private GameObject returnButton;
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject pauseMenuPauseTitle;
@@ -73,6 +74,11 @@ public class CanvasManager : MonoBehaviour
         foreach (StatDisplayController statDisplay in playerStats.GetComponentsInChildren<StatDisplayController>(true))
         {
             statDisplay.Initialize();
+        }
+
+        foreach (LevelCompleteStatsController statsController in levelComplete.GetComponentsInChildren<LevelCompleteStatsController>(true))
+        {
+            statsController.Initialize();
         }
 
         // Initialize panel states without animation on start

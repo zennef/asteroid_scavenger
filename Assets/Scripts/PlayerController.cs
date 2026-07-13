@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     public event EventHandler OnPlayerHitByRock;
     public event EventHandler OnPlayerHitByWall;
     public enum HitSource { Rock, Wall };
+    public enum ResourceType { FuelCell, Crystal }
 
     public event EventHandler OnFuelCellCollected;
     public event EventHandler OnCrystalCollectedSfx;
@@ -113,6 +114,22 @@ public class PlayerController : MonoBehaviour
     public class OnGamePausedArgs : EventArgs
     {
         public bool IsGamePaused;
+    }
+
+    public event EventHandler<OnDamageEventArgs> OnDamageEvent;
+    public class OnDamageEventArgs : EventArgs
+    {
+        public HitSource Source;
+        public float Amount;
+        public bool WasBlocked;
+        public bool ShieldConsumed;
+    }
+
+    public event EventHandler<OnResourceCollectedEventArgs> OnResourceCollected;
+    public class OnResourceCollectedEventArgs : EventArgs
+    {
+        public ResourceType Type;
+        public float FuelGained;
     }
 
     public InputActionAsset InputActions;
@@ -492,8 +509,10 @@ public class PlayerController : MonoBehaviour
             {
                 LoseFuel(dmgAmt);
                 OnPlayerHitByWall?.Invoke(this, EventArgs.Empty);
+                OnDamageEvent?.Invoke(this, new OnDamageEventArgs { Source = hitSource, Amount = dmgAmt, WasBlocked = false, ShieldConsumed = true });
                 return false;
             }
+            OnDamageEvent?.Invoke(this, new OnDamageEventArgs { Source = hitSource, Amount = dmgAmt, WasBlocked = true, ShieldConsumed = true });
             return true;
         }
         else
@@ -507,6 +526,7 @@ public class PlayerController : MonoBehaviour
             {
                 OnPlayerHitByWall?.Invoke(this, EventArgs.Empty);
             }
+            OnDamageEvent?.Invoke(this, new OnDamageEventArgs { Source = hitSource, Amount = dmgAmt, WasBlocked = false, ShieldConsumed = false });
             return false;
         }
     }
@@ -538,6 +558,7 @@ public class PlayerController : MonoBehaviour
             oc?.Consume("", ColorPalette.Green);
             TriggerFlash(ColorPalette.Green);
             FlashFuelText("+" + Mathf.RoundToInt(fuelCellAmount).ToString(), ColorPalette.Green);
+            OnResourceCollected?.Invoke(this, new OnResourceCollectedEventArgs { Type = ResourceType.FuelCell, FuelGained = fuelCellAmount });
         }
         else if (other.gameObject.CompareTag("Crystal"))
         {
@@ -555,6 +576,8 @@ public class PlayerController : MonoBehaviour
             oc?.Consume("", ColorPalette.Cyan);
             TriggerFlash(ColorPalette.Cyan);
             FlashFuelText("+1", ColorPalette.Cyan);
+            float crystalFuelGainedThisPickup = crystalFuelMultiplier > 0f ? GetCrystalFuelAmount() : 0f;
+            OnResourceCollected?.Invoke(this, new OnResourceCollectedEventArgs { Type = ResourceType.Crystal, FuelGained = crystalFuelGainedThisPickup });
         }
     }
 
@@ -703,6 +726,12 @@ public class PlayerController : MonoBehaviour
     public void IncreaseCrystalCount(int count)
     {
         crystalCount = count;
+        OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
+    }
+
+    public void AddCrystalCount(int amount)
+    {
+        crystalCount += amount;
         OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
     }
 
