@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private int currentLevel = 1;
 
     public event EventHandler<OnCurrentLevelIncreaseEventArgs> OnCurrentLevelIncrease;
+    public event EventHandler<OnCurrentLevelIncreaseEventArgs> OnFinalLevelComplete;
     public class OnCurrentLevelIncreaseEventArgs : EventArgs
     {
         public int CurrentLevel;
@@ -128,10 +129,15 @@ public class GameManager : MonoBehaviour
         }
         if (currentLevel == 12)
         {
-            EndGame(true);
+            OnFinalLevelComplete?.Invoke(this, new OnCurrentLevelIncreaseEventArgs { CurrentLevel = currentLevel });
             return;
         }
         IncreaseLevel();
+    }
+
+    public void ConfirmWin()
+    {
+        EndGame(true);
     }
 
     public void EndGame(bool isWin)

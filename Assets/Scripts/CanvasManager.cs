@@ -21,6 +21,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameObject levelComplete;
     [SerializeField] private GameObject[] levelCompleteStatGroups;
     [SerializeField] private GameObject shopButton;
+    [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject confirmationScreen;
     [SerializeField] private TextMeshProUGUI nextLevelButtonText;
     [SerializeField] private TextMeshProUGUI levelCompleteTitleText;
@@ -70,6 +71,7 @@ public class CanvasManager : MonoBehaviour
         gameManagerScript.OnGameStart += GameManagerScript_OnGameStart;
         gameManagerScript.OnGameOver += GameManagerScript_OnGameOver;
         gameManagerScript.OnYouWin += GameManagerScript_OnYouWin;
+        gameManagerScript.OnFinalLevelComplete += GameManagerScript_OnFinalLevelComplete;
 
         playerController = player.GetComponent<PlayerController>();
         playerController.OnCrystalCollected += PlayerController_OnCrystalCollected;
@@ -117,6 +119,7 @@ public class CanvasManager : MonoBehaviour
             gameManagerScript.OnGameStart -= GameManagerScript_OnGameStart;
             gameManagerScript.OnGameOver -= GameManagerScript_OnGameOver;
             gameManagerScript.OnYouWin -= GameManagerScript_OnYouWin;
+            gameManagerScript.OnFinalLevelComplete -= GameManagerScript_OnFinalLevelComplete;
         }
         if (playerController != null)
         {
@@ -239,6 +242,8 @@ public class CanvasManager : MonoBehaviour
         ResetHUDKeyValues();
         ResetAvailableUpgradeLists();
         HidePanel(playerStats, new Vector2(0, -SLIDE_DISTANCE));
+        shopButton.SetActive(false);
+        continueButton.SetActive(false);
     }
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
@@ -343,6 +348,11 @@ public class CanvasManager : MonoBehaviour
         if (e.CurrentLevel > 1) ShowLevelComplete(e.CurrentLevel - 1);
     }
 
+    private void GameManagerScript_OnFinalLevelComplete(object sender, GameManager.OnCurrentLevelIncreaseEventArgs e)
+    {
+        ShowLevelComplete(e.CurrentLevel, isFinalLevel: true);
+    }
+
     // ---------------------------------------------------------------------------
     // Public panel methods
     // ---------------------------------------------------------------------------
@@ -357,15 +367,15 @@ public class CanvasManager : MonoBehaviour
         nextLevelButtonText.text = $"LEVEL {nextLevel} >>";
     }
 
-    private void ShowLevelComplete(int completedLevel)
+    private void ShowLevelComplete(int completedLevel, bool isFinalLevel = false)
     {
         SetLevelCompleteText(completedLevel);
         ShowPanelInstant(menuBackground);
         ShowPanel(levelComplete, new Vector2(0, -SLIDE_DISTANCE));
-        ShowLevelCompleteStats();
+        ShowLevelCompleteStats(isFinalLevel);
     }
 
-    private void ShowLevelCompleteStats()
+    private void ShowLevelCompleteStats(bool isFinalLevel = false)
     {
         float delay = SLIDE_DURATION;
 
@@ -375,7 +385,10 @@ public class CanvasManager : MonoBehaviour
             delay += SLIDE_DURATION + LEVEL_COMPLETE_GROUP_DELAY;
         }
 
-        ShowPanel(shopButton, Vector2.zero, delay);
+        if (isFinalLevel)
+            ShowPanel(continueButton, Vector2.zero, delay);
+        else
+            ShowPanel(shopButton, Vector2.zero, delay);
     }
 
     public void ResetCrystals()
