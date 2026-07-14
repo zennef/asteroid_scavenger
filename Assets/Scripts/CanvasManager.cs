@@ -19,6 +19,11 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI youWinText;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject levelComplete;
+    [SerializeField] private GameObject[] levelCompleteStatGroups;
+    [SerializeField] private GameObject shopButton;
+    [SerializeField] private GameObject confirmationScreen;
+    [SerializeField] private TextMeshProUGUI nextLevelButtonText;
+    [SerializeField] private TextMeshProUGUI levelCompleteTitleText;
     [SerializeField] private LevelCompleteStatsController levelCompleteStatsController;
     [SerializeField] private GameObject returnButton;
     [SerializeField] private GameObject restartButton;
@@ -50,6 +55,7 @@ public class CanvasManager : MonoBehaviour
     private const float SLIDE_DURATION = 0.3f;
     private const float FADE_DURATION = 0.2f;
     private const float HIDE_DURATION = 0.15f;
+    private const float LEVEL_COMPLETE_GROUP_DELAY = 0.25f;
 
     private PlayerController playerController;
     private GameManager gameManagerScript;
@@ -333,17 +339,43 @@ public class CanvasManager : MonoBehaviour
     private void GameManagerScript_OnCurrentLevelIncrease(object sender, GameManager.OnCurrentLevelIncreaseEventArgs e)
     {
         UpdateHUDCurrentLevel(e.CurrentLevel);
-        if (e.CurrentLevel > 1) ShowLevelComplete();
+        SetNextLevelButtonText(e.CurrentLevel);
+        if (e.CurrentLevel > 1) ShowLevelComplete(e.CurrentLevel - 1);
     }
 
     // ---------------------------------------------------------------------------
     // Public panel methods
     // ---------------------------------------------------------------------------
 
-    private void ShowLevelComplete()
+    private void SetLevelCompleteText(int completedLevel)
     {
+        levelCompleteTitleText.text = $"Level {completedLevel}\nComplete";
+    }
+
+    private void SetNextLevelButtonText(int nextLevel)
+    {
+        nextLevelButtonText.text = $"LEVEL {nextLevel} >>";
+    }
+
+    private void ShowLevelComplete(int completedLevel)
+    {
+        SetLevelCompleteText(completedLevel);
         ShowPanelInstant(menuBackground);
         ShowPanel(levelComplete, new Vector2(0, -SLIDE_DISTANCE));
+        ShowLevelCompleteStats();
+    }
+
+    private void ShowLevelCompleteStats()
+    {
+        float delay = SLIDE_DURATION;
+
+        foreach (GameObject group in levelCompleteStatGroups)
+        {
+            ShowPanel(group, new Vector2(0, -SLIDE_DISTANCE), delay);
+            delay += SLIDE_DURATION + LEVEL_COMPLETE_GROUP_DELAY;
+        }
+
+        ShowPanel(shopButton, Vector2.zero, delay);
     }
 
     public void ResetCrystals()
@@ -373,6 +405,26 @@ public class CanvasManager : MonoBehaviour
     public void HideHowToPlay()
     {
         HidePanel(howToPlayPanel, new Vector2(0, -SLIDE_DISTANCE));
+    }
+
+    public void ShowConfirmationScreen()
+    {
+        ShowPanel(confirmationScreen, new Vector2(0, -SLIDE_DISTANCE));
+    }
+
+    public void HideConfirmationScreen()
+    {
+        HidePanel(confirmationScreen, new Vector2(0, -SLIDE_DISTANCE));
+    }
+
+    public void ShowPlayerStatsPanel()
+    {
+        ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE));
+    }
+
+    public void HidePlayerStatsPanel()
+    {
+        HidePanel(playerStats, new Vector2(0, -SLIDE_DISTANCE));
     }
 
     public void OpenSpecialShop()
@@ -470,18 +522,31 @@ public class CanvasManager : MonoBehaviour
         GameObject[] shuffledCommonUpgrades = (GameObject[])ArrayHelpers.Shuffle(availableCommonUpgrades);
         GameObject[] shuffledLegendaryUpgrades = (GameObject[])ArrayHelpers.Shuffle(availableLegendaryUpgrades);
 
+        int commonCursor = 0;
+        int legendaryCursor = 0;
+
         for (int i = 0; i < 3; i++)
         {
+            if (commonCursor >= shuffledCommonUpgrades.Length && legendaryCursor >= shuffledLegendaryUpgrades.Length)
+                break;
+
             Transform spawnPos = upgradeSpawnPositions[i];
             GameObject upgradeToInstantiate;
 
-            if (UnityEngine.Random.Range(0, 7) == 0 && shuffledLegendaryUpgrades.Length > i)
+            if (UnityEngine.Random.Range(0, 7) == 0 && legendaryCursor < shuffledLegendaryUpgrades.Length)
             {
-                upgradeToInstantiate = shuffledLegendaryUpgrades[i];
+                upgradeToInstantiate = shuffledLegendaryUpgrades[legendaryCursor];
+                legendaryCursor++;
+            }
+            else if (commonCursor < shuffledCommonUpgrades.Length)
+            {
+                upgradeToInstantiate = shuffledCommonUpgrades[commonCursor];
+                commonCursor++;
             }
             else
             {
-                upgradeToInstantiate = shuffledCommonUpgrades[i];
+                upgradeToInstantiate = shuffledLegendaryUpgrades[legendaryCursor];
+                legendaryCursor++;
             }
 
             Instantiate(upgradeToInstantiate, spawnPos.position, Quaternion.identity, spawnPos.transform);

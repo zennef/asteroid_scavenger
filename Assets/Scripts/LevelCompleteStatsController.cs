@@ -37,18 +37,18 @@ public class LevelCompleteStatsController : MonoBehaviour
 
     private void LevelStatsManagerScript_OnLevelStatsFinalized(object sender, LevelStatsManager.OnLevelStatsFinalizedEventArgs e)
     {
-        fuelCellsText.text = e.FuelCellsCollected + " (" + Mathf.RoundToInt(e.FuelCellsFuelGained) + " fuel)";
+        fuelCellsText.text = e.FuelCellsCollected + " (" + Mathf.RoundToInt(e.FuelCellsFuelGained) + " FUEL)";
 
         bool crystalFuelUnlocked = playerController.GetCrystalFuelMultiplier() > 0f;
         crystalsText.text = crystalFuelUnlocked
-            ? e.CrystalsCollected + " (" + Mathf.RoundToInt(e.CrystalsFuelGained) + " fuel)"
+            ? e.CrystalsCollected + " (" + Mathf.RoundToInt(e.CrystalsFuelGained) + " FUEL)"
             : e.CrystalsCollected.ToString();
 
         shieldsUsedText.text = e.ShieldsUsed.ToString();
         noShieldBonusText.text = (e.NoShieldUsedBonusEarned ? 1 : 0).ToString();
 
-        rockImpactsText.text = e.RockImpacts + " (-" + Mathf.RoundToInt(e.RockFuelLoss) + " fuel)";
-        asteroidImpactsText.text = e.AsteroidImpacts + " (-" + Mathf.RoundToInt(e.AsteroidFuelLoss) + " fuel)";
+        rockImpactsText.text = e.RockImpacts + " (-" + Mathf.RoundToInt(e.RockFuelLoss) + " FUEL)";
+        asteroidImpactsText.text = e.AsteroidImpacts + " (-" + Mathf.RoundToInt(e.AsteroidFuelLoss) + " FUEL)";
         totalImpactFuelLossText.text = Mathf.RoundToInt(e.TotalImpactFuelLoss).ToString();
         impactFreeBonusText.text = (e.ImpactFreeBonusEarned ? 1 : 0).ToString();
 
