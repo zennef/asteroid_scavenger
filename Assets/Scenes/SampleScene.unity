@@ -28195,7 +28195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VersionDisplayController
   versionText: {fileID: 752609249}
-  buildNumber: 7
+  buildNumber: 8
 --- !u!1 &1123163192
 GameObject:
   m_ObjectHideFlags: 0
