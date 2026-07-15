@@ -8,16 +8,17 @@ public class AfterburnerController : MonoBehaviour
 
     private Vector3 originalLocalScale;
     private Coroutine shrinkCoroutine;
+    private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
         originalLocalScale = transform.localScale;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void OnEnable()
     {
         transform.localScale = originalLocalScale;
-        shrinkCoroutine = StartCoroutine(ShrinkOverTime(duration));
     }
 
     void OnDisable()
@@ -31,23 +32,29 @@ public class AfterburnerController : MonoBehaviour
 
     public void SetColor(Color32 color)
     {
-        GetComponent<SpriteRenderer>().color = color;
+        spriteRenderer.color = color;
+        shrinkCoroutine = StartCoroutine(ShrinkAndFadeOverTime(duration));
     }
 
-    IEnumerator ShrinkOverTime(float time)
+    IEnumerator ShrinkAndFadeOverTime(float time)
     {
         Vector2 startScale = transform.localScale;
+        Color startColor = spriteRenderer.color;
+        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
         float currentTime = 0f;
 
         while (currentTime < time)
         {
             currentTime += Time.deltaTime;
             // Interpolates linearly between start and target.
-            transform.localScale = Vector2.Lerp(startScale, targetScale, currentTime / time);
+            float t = currentTime / time;
+            transform.localScale = Vector2.Lerp(startScale, targetScale, t);
+            spriteRenderer.color = Color.Lerp(startColor, endColor, t);
             yield return null;
         }
 
         transform.localScale = targetScale; // Ensure exact final scale
+        spriteRenderer.color = endColor;
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }

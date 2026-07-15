@@ -121,4 +121,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfterburnerController
   targetScale: {x: 0.03, y: 0.03}
-  duration: 0.4
+  duration: 0.6
