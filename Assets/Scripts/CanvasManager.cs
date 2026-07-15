@@ -244,6 +244,8 @@ public class CanvasManager : MonoBehaviour
         HidePanel(playerStats, new Vector2(0, -SLIDE_DISTANCE));
         shopButton.SetActive(false);
         continueButton.SetActive(false);
+        levelComplete.SetActive(false);
+        HideMenuBackgroundInstant();
     }
 
     private void PlayerController_OnUpgradePurchased(object sender, PlayerController.OnUpgradePurchasedArgs e)
@@ -351,6 +353,7 @@ public class CanvasManager : MonoBehaviour
     private void GameManagerScript_OnFinalLevelComplete(object sender, GameManager.OnCurrentLevelIncreaseEventArgs e)
     {
         ShowLevelComplete(e.CurrentLevel, isFinalLevel: true);
+        PrepareWinPauseMenu();
     }
 
     // ---------------------------------------------------------------------------
@@ -375,6 +378,18 @@ public class CanvasManager : MonoBehaviour
         ShowLevelCompleteStats(isFinalLevel);
     }
 
+    private void PrepareWinPauseMenu()
+    {
+        pauseMenuYouWinTitle.SetActive(true);
+        pauseMenuGameOverTitle.SetActive(false);
+        pauseMenuPauseTitle.SetActive(false);
+        returnButton.SetActive(false);
+        restartButton.SetActive(true);
+
+        ShowPanel(pauseMenu, new Vector2(0, -SLIDE_DISTANCE));
+        ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE), delay: 0.05f);
+    }
+
     private void ShowLevelCompleteStats(bool isFinalLevel = false)
     {
         float delay = SLIDE_DURATION;
@@ -386,9 +401,15 @@ public class CanvasManager : MonoBehaviour
         }
 
         if (isFinalLevel)
+        {
+            shopButton.SetActive(false);
             ShowPanel(continueButton, Vector2.zero, delay);
+        }
         else
+        {
+            continueButton.SetActive(false);
             ShowPanel(shopButton, Vector2.zero, delay);
+        }
     }
 
     public void ResetCrystals()
@@ -405,6 +426,7 @@ public class CanvasManager : MonoBehaviour
     public void OpenShop()
     {
         AudioManager.Instance.PlayShopMusic();
+        HidePanel(levelComplete, new Vector2(0, -SLIDE_DISTANCE));
         ShowPanel(shop, new Vector2(0, -SLIDE_DISTANCE));
         ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE), delay: 0.05f);
         SpawnRandomUpgrades();
@@ -428,6 +450,11 @@ public class CanvasManager : MonoBehaviour
     public void HideConfirmationScreen()
     {
         HidePanel(confirmationScreen, new Vector2(0, -SLIDE_DISTANCE));
+    }
+
+    public void HideLevelComplete()
+    {
+        HidePanel(levelComplete, new Vector2(0, -SLIDE_DISTANCE));
     }
 
     public void ShowPlayerStatsPanel()
@@ -479,14 +506,13 @@ public class CanvasManager : MonoBehaviour
 
     public void YouWin()
     {
+        // Visual reveal already happened via PrepareWinPauseMenu when the level 12
+        // complete screen appeared. This just guarantees title/button state is correct.
         pauseMenuYouWinTitle.SetActive(true);
         pauseMenuGameOverTitle.SetActive(false);
         pauseMenuPauseTitle.SetActive(false);
         returnButton.SetActive(false);
         restartButton.SetActive(true);
-
-        ShowPanel(pauseMenu, new Vector2(0, -SLIDE_DISTANCE));
-        ShowPanel(playerStats, new Vector2(0, -SLIDE_DISTANCE), delay: 0.05f);
     }
 
     // ---------------------------------------------------------------------------
