@@ -20,6 +20,9 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject levelComplete;
     [SerializeField] private GameObject[] levelCompleteStatGroups;
+    [SerializeField] private GameObject levelStatsManager;
+    [SerializeField] private GameObject noShieldBonusStatGroup;
+    [SerializeField] private GameObject impactFreeBonusStatGroup;
     [SerializeField] private GameObject shopButton;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject confirmationScreen;
@@ -60,6 +63,9 @@ public class CanvasManager : MonoBehaviour
 
     private PlayerController playerController;
     private GameManager gameManagerScript;
+    private LevelStatsManager levelStatsManagerScript;
+    private bool noShieldBonusEarnedThisLevel;
+    private bool impactFreeBonusEarnedThisLevel;
 
 
     void Start()
@@ -72,6 +78,9 @@ public class CanvasManager : MonoBehaviour
         gameManagerScript.OnGameOver += GameManagerScript_OnGameOver;
         gameManagerScript.OnYouWin += GameManagerScript_OnYouWin;
         gameManagerScript.OnFinalLevelComplete += GameManagerScript_OnFinalLevelComplete;
+
+        levelStatsManagerScript = levelStatsManager.GetComponent<LevelStatsManager>();
+        levelStatsManagerScript.OnLevelStatsFinalized += LevelStatsManagerScript_OnLevelStatsFinalized;
 
         playerController = player.GetComponent<PlayerController>();
         playerController.OnCrystalCollected += PlayerController_OnCrystalCollected;
@@ -128,6 +137,16 @@ public class CanvasManager : MonoBehaviour
             playerController.OnUpgradePurchased -= PlayerController_OnUpgradePurchased;
             playerController.OnGamePaused -= PlayerController_OnGamePaused;
         }
+        if (levelStatsManagerScript != null)
+        {
+            levelStatsManagerScript.OnLevelStatsFinalized -= LevelStatsManagerScript_OnLevelStatsFinalized;
+        }
+    }
+
+    private void LevelStatsManagerScript_OnLevelStatsFinalized(object sender, LevelStatsManager.OnLevelStatsFinalizedEventArgs e)
+    {
+        noShieldBonusEarnedThisLevel = e.NoShieldUsedBonusEarned;
+        impactFreeBonusEarnedThisLevel = e.ImpactFreeBonusEarned;
     }
 
     // ---------------------------------------------------------------------------
@@ -162,9 +181,16 @@ public class CanvasManager : MonoBehaviour
         Vector2 restingPos = rt.anchoredPosition;
         rt.anchoredPosition = restingPos + slideFromOffset;
         cg.alpha = 0f;
+        cg.interactable = false;
+        cg.blocksRaycasts = false;
 
         Sequence seq = DOTween.Sequence();
         if (delay > 0f) seq.AppendInterval(delay);
+        seq.AppendCallback(() =>
+        {
+            cg.interactable = true;
+            cg.blocksRaycasts = true;
+        });
         seq.Append(rt.DOAnchorPos(restingPos, SLIDE_DURATION).SetEase(Ease.OutCubic));
         seq.Join(cg.DOFade(1f, FADE_DURATION));
         seq.SetUpdate(true); // Run during Time.timeScale = 0 (pause menu)
@@ -394,9 +420,22 @@ public class CanvasManager : MonoBehaviour
     {
         float delay = SLIDE_DURATION;
 
-        foreach (GameObject group in levelCompleteStatGroups)
+        for (int i = 0; i < levelCompleteStatGroups.Length; i++)
         {
+            GameObject group = levelCompleteStatGroups[i];
             ShowPanel(group, new Vector2(0, -SLIDE_DISTANCE), delay);
+
+            bool shouldPlayCrystalSfx =
+                (group == noShieldBonusStatGroup && noShieldBonusEarnedThisLevel) ||
+                (group == impactFreeBonusStatGroup && impactFreeBonusEarnedThisLevel);
+
+            if (shouldPlayCrystalSfx)
+            {
+                float sfxDelay = delay;
+                DOVirtual.DelayedCall(sfxDelay, () => AudioManager.Instance.PlaySFX("crystal_collect"))
+                          .SetUpdate(true);
+            }
+
             delay += SLIDE_DURATION + LEVEL_COMPLETE_GROUP_DELAY;
         }
 
