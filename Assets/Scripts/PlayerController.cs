@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject leftButton;
     [SerializeField] private GameObject rightButton;
     [SerializeField] private GameObject currentFuel;
+    [SerializeField] private GameObject shieldCountDisplay;
     [SerializeField] private float maxFuelAmount = 100f;
     [SerializeField] private float fuelCellAmount = 40f;
     [SerializeField] private float wallImpactFuelLoss = 40f;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private Vector2Int lanePosition;
     private bool isMoving = false;
     private TextMeshPro fuelText;
+    private TextMeshPro shieldCountText;
     private float fuelAmount = 100f;
     private bool isLevelRunning = false;
 
@@ -169,6 +171,7 @@ public class PlayerController : MonoBehaviour
     {
         isGamePaused = false;
         fuelText = currentFuel.GetComponent<TextMeshPro>();
+        shieldCountText = shieldCountDisplay.GetComponent<TextMeshPro>();
         spriteRenderer = playerModel.GetComponent<SpriteRenderer>();
         OnShieldChanged += PlayerController_OnShieldChanged;
     }
@@ -225,6 +228,12 @@ public class PlayerController : MonoBehaviour
     private void PlayerController_OnShieldChanged(object sender, OnShieldChangedEventArgs e)
     {
         RefreshShipColor();
+        UpdateShieldCountText(e.ShieldCount);
+    }
+
+    private void UpdateShieldCountText(int count)
+    {
+        shieldCountText.text = count > 1 ? count.ToString() : "";
     }
 
     private Color32 GetShieldRestingColor()
