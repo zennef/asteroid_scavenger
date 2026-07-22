@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         isGamePaused = paused;
         if (pauseButton != null)
-            pauseButton.interactable = !paused;
+            pauseButton.gameObject.SetActive(!paused);
         if (leftButton != null)
             leftButton.SetActive(!paused);
         if (rightButton != null)
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         {
             isGamePaused = true;
             if (pauseButton != null)
-                pauseButton.interactable = false;
+                pauseButton.gameObject.SetActive(false);
             if (leftButton != null)
                 leftButton.SetActive(false);
             if (rightButton != null)
@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
         OnCrystalCollected?.Invoke(this, new OnCrystalCollectedEventArgs { CrystalCount = crystalCount });
         OnShieldChanged?.Invoke(this, new OnShieldChangedEventArgs { ShieldCount = shieldCount });
         isLevelRunning = true;
-        if (pauseButton != null) pauseButton.interactable = true;
+        if (pauseButton != null) pauseButton.gameObject.SetActive(true);
         if (leftButton != null) leftButton.SetActive(true);
         if (rightButton != null) rightButton.SetActive(true);
         StartCoroutine(DrainFuelRoutine());
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
         StopBlink();
         StopAllCoroutines();
         isLevelRunning = false;
-        if (pauseButton != null) pauseButton.interactable = false;
+        if (pauseButton != null) pauseButton.gameObject.SetActive(false);
         if (leftButton != null) leftButton.SetActive(false);
         if (rightButton != null) rightButton.SetActive(false);
     }
@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
         StopBlink();
         StopAllCoroutines();
         isLevelRunning = false;
-        if (pauseButton != null) pauseButton.interactable = false;
+        if (pauseButton != null) pauseButton.gameObject.SetActive(false);
         if (leftButton != null) leftButton.SetActive(false);
         if (rightButton != null) rightButton.SetActive(false);
     }
