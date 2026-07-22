@@ -10,6 +10,7 @@ public class ShieldBarController : MonoBehaviour
     public bool isOnline = true;
     public bool isGamePaused = false;
     public bool isFrozen = false;
+    private Color32 onlineColor = ColorPalette.Blue;
 
     void Start()
     {
@@ -43,7 +44,7 @@ public class ShieldBarController : MonoBehaviour
 
         shieldBarFillImage.color =
                 slider.value == slider.maxValue
-                ? ColorPalette.Blue
+                ? onlineColor
                 : ColorPalette.White;
     }
 
@@ -57,6 +58,11 @@ public class ShieldBarController : MonoBehaviour
     public void SetFrozen(bool frozen)
     {
         isFrozen = frozen;
+    }
+
+    public void SetOnlineColor(Color32 color)
+    {
+        onlineColor = color;
     }
 
     public void SetMaxShield(int maxValue)

@@ -56,6 +56,7 @@ public class ShieldManager : MonoBehaviour
         {
             shields[i].SetFrozen(false);
             shields[i].SetShield(100);
+            shields[i].SetOnlineColor(ColorPalette.Blue);
         }
     }
 
@@ -114,6 +115,13 @@ public class ShieldManager : MonoBehaviour
             for (int i = 0; i < numberOfShields; i++)
             {
                 shields[i].SetRechargeDuration(newRate);
+            }
+        }
+        else if (e.UpgradeType == UpgradeType.AsteroidShield)
+        {
+            for (int i = 0; i < shields.Length; i++)
+            {
+                shields[i].SetOnlineColor(ColorPalette.Violet);
             }
         }
     }

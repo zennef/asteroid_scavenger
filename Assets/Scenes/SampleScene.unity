@@ -587,7 +587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461149464602879104, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7627285207042947709, guid: 69db7630383faba4eadff46da8252b35, type: 3}
       propertyPath: m_Pivot.x
@@ -28463,7 +28463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VersionDisplayController
   versionText: {fileID: 752609249}
-  buildNumber: 9
+  buildNumber: 11
 --- !u!1 &1123163192
 GameObject:
   m_ObjectHideFlags: 0
@@ -32874,7 +32874,7 @@ SpriteRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4360530552843628718, guid: 8d5fc46dfe8756e4fa568a7854f3e46e, type: 3}
-  m_Color: {r: 0, g: 0.54901963, b: 1, a: 1}
+  m_Color: {r: 0.548336, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

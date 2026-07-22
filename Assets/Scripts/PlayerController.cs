@@ -229,7 +229,13 @@ public class PlayerController : MonoBehaviour
 
     private Color32 GetShieldRestingColor()
     {
-        return shieldCount > 0 ? ColorPalette.Blue : ColorPalette.White;
+        if (shieldCount <= 0) return ColorPalette.White;
+        return isWallTrueDamage ? ColorPalette.Blue : ColorPalette.Violet;
+    }
+
+    private Color32 GetShieldBlockColor()
+    {
+        return isWallTrueDamage ? ColorPalette.Blue : ColorPalette.Violet;
     }
 
     private void RefreshShipColor()
@@ -403,9 +409,7 @@ public class PlayerController : MonoBehaviour
         {
             spriteRenderer.DOKill();
             spriteRenderer.color = ColorPalette.Pink;
-            Color32 targetColor = shieldCount > 0
-                ? new Color32(0x00, 0x8C, 0xFF, 0xFF)
-                : new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+            Color32 targetColor = GetShieldRestingColor();
             spriteRenderer.DOColor(targetColor, 0.25f);
             yield return new WaitForSeconds(0.3f);
         }
@@ -541,7 +545,7 @@ public class PlayerController : MonoBehaviour
             oc?.Consume("", ColorPalette.Pink);
             if (!blocked) TriggerFlash(ColorPalette.Pink);
             if (!blocked) FlashFuelText("-" + Mathf.RoundToInt(rockImpactFuelLoss).ToString(), ColorPalette.Pink);
-            if (blocked) FlashFuelText("BLOCKED!", ColorPalette.Blue);
+            if (blocked) FlashFuelText("BLOCKED!", GetShieldBlockColor());
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
@@ -549,7 +553,7 @@ public class PlayerController : MonoBehaviour
             oc?.Consume("", ColorPalette.Pink);
             if (!blocked) TriggerFlash(ColorPalette.Pink);
             if (!blocked) FlashFuelText("-" + Mathf.RoundToInt(wallImpactFuelLoss).ToString(), ColorPalette.Pink);
-            if (blocked) FlashFuelText("BLOCKED!", ColorPalette.Blue);
+            if (blocked) FlashFuelText("BLOCKED!", GetShieldBlockColor());
         }
         else if (other.gameObject.CompareTag("Fuel"))
         {
@@ -680,6 +684,7 @@ public class PlayerController : MonoBehaviour
         }
 
         isWallTrueDamage = false;
+        RefreshShipColor();
         OnUpgradePurchased?.Invoke(this, new OnUpgradePurchasedArgs { UpgradeType = UpgradeType.AsteroidShield, UpgradeLevel = isWallTrueDamageLevel });
     }
 
